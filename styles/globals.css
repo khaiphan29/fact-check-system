@@ -1,0 +1,181 @@
+* {
+  --primary-light-gray: #f8f8f8;
+  --primary-gray: #e9e9e9;
+  --primary-dark-gray: #3e3e3e;
+  --primary-black: #222;
+
+  --color-custom-white: #d3d3d3;
+  --color-custom-light-yellow: #f3f3ee;
+  --color-custom-light-gray: #f3f3f3;
+  --color-dotteds-rgb: 34, 34, 34;
+
+  --primary-text-size: 16px;
+
+  --nav-inactive: #222222c2;
+
+  --tag-approved: #aaeec4;
+  --tag-neutral: #fffbdd;
+  --tag-refute: #ffe1e2;
+
+  --border-radius: 12px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+  margin: 0;
+  padding: 0 40px;
+
+  background-color: var(--primary-light-gray);
+
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+  margin: 0;
+  color: var(--primary-black);
+}
+
+a {
+  color: #222;
+  text-decoration: none;
+}
+
+p,
+input,
+textarea {
+  margin: 0;
+
+  line-height: 1.3;
+  text-align: justify;
+  color: var(--primary-black);
+  border: none;
+}
+
+pre {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* SECTION GENERAL CLASSES */
+.heading-small {
+  color: var(--primary-black);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.p-preview {
+  width: 100%;
+  max-width: 100%;
+  /* max-height: 15vh; */
+
+  margin: 0;
+
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  display: -webkit-box;
+
+  color: var(--primary-black);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.5;
+  text-align: justify;
+  white-space: pre-wrap;
+}
+
+/* ANCHOR FOR CARDS/BOXES */
+/* .card-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--primary-black);
+  border-radius: 12px 12px 0 0px;
+
+  padding: 10px 70px;
+}
+
+.card-header__nav {
+  margin-left: 10px;
+  padding: 7px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+
+  background-color: var(--primary-dark-gray);
+  border-radius: 12px;
+}
+
+.card-header__nav-link {
+  background-color: var(--primary-dark-gray);
+  padding: 0px 20px;
+  height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 12px;
+  border: 1px solid #4e4e4e;
+
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--color-custom-white);
+
+  transition: 0.2s;
+}
+
+.card-header__nav-link:hover {
+  border: 1px solid var(--color-custom-white);
+} */
+
+/* !SECTION GENERAL CLASSES */
+
+/* SECTION Tag */
+
+.tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+
+  padding: 0 20px;
+  border-radius: 12px;
+}
+
+.bg-tag-approved {
+  background-color: var(--tag-approved);
+}
+
+.bg-tag-refute {
+  background-color: var(--tag-refute);
+}
+
+.bg-tag-neutral {
+  background-color: var(--tag-neutral);
+}
+
+.tag__title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--primary-black);
+  text-align: center;
+  margin: 0px 0px 0px 10px;
+}
+
+/* !SECTION Tag */

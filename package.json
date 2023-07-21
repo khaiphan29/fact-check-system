@@ -1,5 +1,5 @@
 {
-  "name": "first_app",
+  "name": "fact-check-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,13 @@
     "@types/node": "20.4.1",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
+    "bcrypt": "^5.1.0",
+    "formik": "^2.4.2",
     "next": "13.4.9",
+    "next-auth": "^4.22.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^4.10.1",
     "typescript": "5.1.6"
   }
 }
