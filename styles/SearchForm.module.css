@@ -1,0 +1,80 @@
+/* ANCHOR SEARCH FORM */
+.form {
+  position: relative;
+  width: 100%;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+
+  background-color: var(--primary-light-gray);
+}
+
+.dark_form {
+  background-color: var(--primary-dark-gray);
+}
+
+.search_img_container {
+  background: none;
+  position: absolute;
+  left: 0;
+  margin-left: 25px;
+  border: none;
+  cursor: pointer;
+}
+
+.search_img {
+  filter: brightness(40%);
+  color: var(--primary-gray);
+  opacity: 0.5;
+}
+
+.dark_search_img {
+  filter: brightness(80%);
+  color: var(--primary-gray);
+}
+
+.search_box {
+  display: flex;
+  align-items: center;
+
+  padding: 20px 50px 20px 65px;
+  width: 80%;
+}
+
+.search_input {
+  filter: brightness(40%);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  width: 100%;
+  background: none;
+  border: none;
+  resize: none;
+
+  color: var(--primary-gray);
+  font-size: var(--primary-text-size);
+  font-weight: 300;
+  font-size: 17px;
+}
+
+.search_input::placeholder {
+  /* filter: brightness(80%); */
+
+  color: var(--primary-gray);
+  font-size: 17px;
+  font-weight: 300;
+  align-items: center;
+  text-align: justify;
+}
+
+.dark_search_input {
+  filter: brightness(80%);
+  color: white;
+}
+
+.dark_search_input::placeholder {
+  color: #f8f8f8;
+}
+
+.search_input:focus {
+  outline: none;
+}

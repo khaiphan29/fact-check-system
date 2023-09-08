@@ -1,0 +1,217 @@
+.container {
+  margin: 24px -8px;
+  /* min-height: 60vh; */
+
+  display: flex;
+
+  border-radius: 25px;
+  transition: 0.2s;
+}
+
+/* ANCHOR RESULT CONTAINER */
+
+.result_container {
+  /* width: 60vw; */
+  flex: 6;
+
+  padding: 40px;
+
+  border: 8px solid white;
+  border-radius: 25px;
+  z-index: 2;
+}
+
+.result_container p {
+  /* max-height: 15vh; */
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  
+  display: -webkit-box;
+  margin-top: 5px;
+
+  color: var(--primary-black);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 1.5;
+  text-align: justify;
+  /* text-overflow: ellipsis; */
+}
+
+.claim_container {
+  margin-bottom: 20px;
+}
+
+.evidence_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* https://css-tricks.com/4-ways-to-animate-the-color-of-a-text-link-on-hover/ */
+.evidence_url {
+  font-size: 18px;
+  font-weight: 500;
+
+  background: linear-gradient(
+    to right,
+    royalblue,
+    royalblue 50%,
+    var(--primary-black) 50%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 275ms ease;
+}
+
+.evidence_url:hover {
+  background-position: 0 100%;
+}
+
+/* ANCHOR SEARCH NAV */
+.nav {
+  flex: 2;
+  margin-left: -50px;
+  padding-left: 50px;
+  border: 8px solid white;
+  border-left: none;
+  border-radius: 25px;
+
+  background-color: var(--bg-search-nav);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.nav_wrapper {
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.nav > ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav_link {
+  position: relative;
+  flex: 1;
+  padding: 10px 20px;
+  border: 1px dashed white;
+  border-radius: 999px;
+
+  display: flex;
+  justify-content: center;
+
+  color: white;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
+
+  background-image: linear-gradient(var(--primary-black), var(--primary-black));
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 275ms;
+}
+
+.nav_link:hover {
+  background-size: 100% 100%;
+}
+
+.nav_link_more {
+  display: none;
+}
+
+/* ANCHOR FORWARD BUTTON */
+
+.forward_button {
+  flex: 1;
+  margin-left: -50px;
+  padding-left: 50px;
+  border: 8px solid white;
+  border-left: none;
+  border-radius: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  background-image: linear-gradient(var(--primary-black), var(--primary-black));
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 275ms, color 275ms;
+}
+
+.forward_button:hover {
+  background-size: 100% 100%;
+  color: white;
+}
+
+/* ANCHOR CLOSE BUTTON */
+.close_button {
+  flex: 1;
+  margin-right: -50px;
+  padding-right: 50px;
+  border: 8px solid white;
+  border-right: none;
+  border-radius: 25px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  background-image: linear-gradient(var(--primary-black), var(--primary-black));
+  background-position: 100% 50%;
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 275ms, color 275ms;
+}
+
+.close_button:hover {
+  background-size: 100% 100%;
+  color: white;
+}
+
+.btn_approved {
+  background-color: var(--bg-approved-2);
+}
+
+.btn_refute {
+  background-color: var(--bg-refute-2);
+}
+
+.btn_neutral {
+  background-color: var(--bg-neutral-2);
+}
+
+@media only screen and (max-width: 1200px) {
+  /* HUMAN OBJ */
+  .result_container {
+    flex: 7;
+  }
+
+  .nav {
+    flex: 3;
+  }
+
+  .forward_button {
+  }
+
+  .close_button {
+  }
+}
