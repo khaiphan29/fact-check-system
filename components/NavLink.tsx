@@ -29,7 +29,7 @@ const NavLink = (props: Props) => {
     return (
       <div
         className={`${props.className.reduce((acc, cur) => acc + cur)} ${
-          pathName === props.href ? activeClass : ''
+          pathName.includes(props.href) ? activeClass : ''
         }`}
         onClick={() => signOut()}
       >
@@ -42,7 +42,7 @@ const NavLink = (props: Props) => {
     <Link
       href={props.href}
       className={`${props.className.reduce((acc, cur) => acc + cur)} ${
-        pathName === props.href ? activeClass : ''
+        pathName.includes(props.href) ? activeClass : ''
       }`}
     >
       {props.name}

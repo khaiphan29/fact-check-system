@@ -1,5 +1,37 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Setting Up
+Run the command 
+```
+$ openssl rand -base64 32
+```
+
+Create file .env.local at root dir
+```
+NEXTAUTH_SECRET=[The result created by the previous CMD]
+```
+
+### Prisma set up
+Set up your Prisma project 
+```
+npx prisma init
+```
+
+Connect to Postgres, create .env in root dir
+```
+DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
+```
+
+Prisma first migration
+```
+npx prisma migrate dev --name init
+```
+
+Run prisma Studio to see the database UI
+```
+npx prisma studio
+```
+
 ## Getting Started
 
 First, run the development server:

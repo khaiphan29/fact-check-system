@@ -2,12 +2,15 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
+import { Prisma, PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-//   secret: process.env.NEXTAUTH_SECRET!,
+  secret: process.env.NEXTAUTH_SECRET!,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -16,18 +19,33 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const user = {
-          id: "42",
-          email: "admin",
-          password: "123123",
-        };
+        // const user = {
+        //   id: "42",
+        //   email: "admin",
+        //   password: "123123",
+        // };
+
+        console.log(credentials);
+
+        const user = await prisma.user.findFirst({
+          where: {
+            AND: [
+              {
+                OR: [
+                  { username: credentials?.username },
+                  { email: credentials?.username },
+                ],
+              },
+              { password: credentials?.password },
+            ],
+          },
+        });
+
+        console.log(user);
 
         // If no error and we have user data, return it
-        if (
-          credentials?.username === user.email &&
-          credentials.password === user.password
-        ) {
-          return user;
+        if (user) {
+          return { ...user, id: user.id.toString };
         }
 
         // Return null if user data could not be retrieved

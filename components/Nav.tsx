@@ -27,7 +27,7 @@ const Nav = async () => {
 
       <ul className="nav__middle">
         <li>
-          <NavLink name="Kiểm Tin" href="/" className={["nav__link"]} />
+          <NavLink name="Kiểm Tin" href="/fact-check" className={["nav__link"]} />
         </li>
         <li>
           <NavLink
