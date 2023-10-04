@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 
 interface Props {
   claim: string;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 interface DynamicBackground {
@@ -18,23 +19,23 @@ interface DynamicBackground {
 
 const dynamicBackground: DynamicBackground[] = [
   {
-    bg_1: "var(--bg-neutral-1)",
-    bg_2: "var(--bg-neutral-2)",
+    bg_1: "var(--bg-refute-1)",
+    bg_2: "var(--bg-refute-2)",
   },
   {
     bg_1: "var(--bg-approved-1)",
     bg_2: "var(--bg-approved-2)",
-  },
+  },  
   {
-    bg_1: "var(--bg-refute-1)",
-    bg_2: "var(--bg-refute-2)",
-  },
+    bg_1: "var(--bg-neutral-1)",
+    bg_2: "var(--bg-neutral-2)",
+  }
 ];
 
 const dynamicButton = [
-  styles.btn_neutral,
-  styles.btn_approved,
   styles.btn_refute,
+  styles.btn_approved,
+  styles.btn_neutral,
 ];
 
 // Send data to API route
@@ -58,7 +59,7 @@ const SearchResult = (props: Props) => {
   async function fetchData() {
     try {
       const res: Response = await fetch(
-        "http://localhost:3000/api/fact-check",
+        "/api/fact-check",
         {
           method: "POST",
           headers: {
@@ -73,32 +74,25 @@ const SearchResult = (props: Props) => {
         }
       );
 
-      const data: {
-        rating: number;
-        fact: string;
-        claim: string;
-        url: string;
-        provider: string;
-        groupId: number
-      } = await res.json();
-      // console.log(data);
-
-      const rating = (data.rating < 3 && data.rating > 0) ? data.rating : 0;
+      const data: FactCheckResponse = await res.json();
 
       console.log(data);
       // console.log("Rating: ", data.rating);
 
       setResult({
         claim: data.claim,
-        evidence: data.fact,
+        evidence: data.evidence,
         provider: data.provider,
         url: data.url,
-        rating: rating,
+        rating: data.label_code,
         groupId: data.groupId,
-        bg: dynamicBackground[rating],
-        btn: dynamicButton[rating],
+        bg: dynamicBackground[data.label_code],
+        btn: dynamicButton[data.label_code],
         isExist: true,
       });
+      
+      props.setIsLoading(false)
+
     } catch (e) {
       console.log("Claim submission error: ", e);
     }

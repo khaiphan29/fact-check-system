@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import React, { useRef, useState, useEffect } from "react";
+import ReactLoading from "react-loading";
 import BackgroundObject1 from "@/public/assets/images/homepage_object1.png";
 import BackgroundObject2 from "@/public/assets/images/homepage_object2.png";
 import SearchResult from "./SearchResult";
@@ -12,6 +13,7 @@ import { useSession } from "next-auth/react";
 
 const Search = () => {
   const [isAlert, setAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form, setForm] = React.useState({
     claim: "",
@@ -47,6 +49,8 @@ const Search = () => {
 
       setClaim("");
       setTimeout(setClaim, 100, formClaim);
+
+      setIsLoading(true)
 
       if (searchContainer.current) {
         window.scrollTo({
@@ -97,7 +101,13 @@ const Search = () => {
         </div>
       </div>
 
-      {claim && <SearchResult claim={claim} />}
+      {isLoading && (
+        <div className={styles.loading_div}>
+          <ReactLoading type={"bars"} color={"000"} />
+        </div>
+      )}
+
+      {claim && <SearchResult claim={claim} setIsLoading={setIsLoading} />}
     </div>
   );
 };

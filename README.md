@@ -7,7 +7,8 @@ npm install
 
 
 ## Setting Up
-Run the command 
+### NextAuth set up
+Run the command to get the code
 ```
 $ openssl rand -base64 32
 ```
@@ -18,12 +19,9 @@ NEXTAUTH_SECRET=[The result created by the previous CMD]
 ```
 
 ### Prisma set up
-Set up your Prisma project 
-```
-npx prisma init
-```
+<div style="color: #cc3300">Your need to create a Postgres database first for Prisma connection</div>
 
-Connect to Postgres, create .env in root dir
+Create **.env** file in **root dir**
 ```
 DATABASE_URL=postgresql://USER:PASSWORD@HOST:PORT/DATABASE?schema=SCHEMA
 ```
@@ -36,6 +34,11 @@ npx prisma migrate dev --name init
 Run prisma Studio to see the database UI
 ```
 npx prisma studio
+```
+
+Run the seed file
+```
+npx prisma db seed
 ```
 
 ## Getting Started
@@ -51,10 +54,6 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 

@@ -7,12 +7,12 @@ import styles from "@/styles/Tag.module.css";
 
 const Tag = (props: { rating: number }) => {
   const image: any =
-    props.rating === 1 ? approved : props.rating === 2 ? refute : neutral;
+    props.rating === 1 ? approved : props.rating === 0 ? refute : neutral;
 
   const bg: string =
     props.rating === 1
       ? styles.bg_tag_approved
-      : props.rating === 2
+      : props.rating === 0
       ? styles.bg_tag_refute
       : styles.bg_tag_neutral;
 
@@ -22,7 +22,7 @@ const Tag = (props: { rating: number }) => {
       <p className={styles.title}>
         {props.rating === 1
           ? "Tin xác thực"
-          : props.rating === 2
+          : props.rating === 0
           ? "Tin giả"
           : "Không xác định"}
       </p>
