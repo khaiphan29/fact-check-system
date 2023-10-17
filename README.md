@@ -1,21 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+# Version 1.1 (Update 17/10/2023)
 ## Install package dependencies
 ```
 npm install
 ```
 
-
 ## Setting Up
-### NextAuth set up
+### local env set up
+Create file .env.local at root dir
+```
+AI_URL=http://127.0.0.1:8000/claim
+```
+
+### NextAuth set up (Currently not work)
 Run the command to get the code
 ```
 $ openssl rand -base64 32
 ```
 
-Create file .env.local at root dir
+Create file .env.local at root dir (skip if created)
 ```
-NEXTAUTH_SECRET=[The result created by the previous CMD]
+NEXTAUTH_SECRET=[The result created by the previous command]
 ```
 
 ### Prisma set up

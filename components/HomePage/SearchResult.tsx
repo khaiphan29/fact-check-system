@@ -5,31 +5,32 @@ import Tag from "./Tag";
 import styles from "@/styles/SearchResult.module.css";
 import { TfiAngleRight, TfiClose } from "react-icons/tfi";
 import { useSession } from "next-auth/react";
+import EvidenceItem from "./EvidenceItem";
+import { checkClaim } from "@/utils/factCheck";
+import { request } from "http";
 // import CSS from "csstype";
 
 interface Props {
   claim: string;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface DynamicBackground {
-  bg_1: string;
-  bg_2: string;
-}
-
-const dynamicBackground: DynamicBackground[] = [
+const cssProps: SearchResultCSS[] = [
   {
-    bg_1: "var(--bg-refute-1)",
-    bg_2: "var(--bg-refute-2)",
+    background_1: "bg-refuted_1",
+    background_2: "bg-refuted_2",
+    border: "border-refuted_2",
   },
   {
-    bg_1: "var(--bg-approved-1)",
-    bg_2: "var(--bg-approved-2)",
-  },  
+    background_1: "bg-approved_1",
+    background_2: "bg-approved_2",
+    border: "border-approved_2",
+  },
   {
-    bg_1: "var(--bg-neutral-1)",
-    bg_2: "var(--bg-neutral-2)",
-  }
+    background_1: "bg-neutral_1",
+    background_2: "bg-neutral_2",
+    border: "border-neutral_2",
+  },
 ];
 
 const dynamicButton = [
@@ -44,127 +45,103 @@ const SearchResult = (props: Props) => {
 
   const [result, setResult] = React.useState({
     claim: "",
-    evidence: "",
     provider: "",
     url: "",
     rating: 0,
     groupId: 0,
-    bg: dynamicBackground[0],
+    css: cssProps[2],
     btn: dynamicButton[0],
-    isExist: false,
+    isExist: true,
   });
 
-  const scrollSection = useRef<HTMLDivElement>(null);
+  const [evidenceList, setEvidenceList] = useState<React.JSX.Element[]>([]);
 
-  async function fetchData() {
+  // const scrollSection = useRef<HTMLDivElement>(null);
+
+  async function getClaim() {
+    const request: FactCheckRequest = {
+      claim: props.claim,
+      email: session ? session.user!.email! : "Guest",
+      isQuick: true,
+      groupId: -1,
+    };
+
     try {
-      const res: Response = await fetch(
-        "/api/fact-check",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            claim: props.claim,
-            email: session ? session.user?.email : "Guest",
-            isQuick: true,
-            groupId: -1
-          }),
-        }
-      );
+      const response = await checkClaim(request);
 
-      const data: FactCheckResponse = await res.json();
-
-      console.log(data);
-      // console.log("Rating: ", data.rating);
+      console.log("Set Result with", response.claim);
 
       setResult({
-        claim: data.claim,
-        evidence: data.evidence,
-        provider: data.provider,
-        url: data.url,
-        rating: data.label_code,
-        groupId: data.groupId,
-        bg: dynamicBackground[data.label_code],
-        btn: dynamicButton[data.label_code],
+        claim: response.claim,
+        provider: response.provider,
+        url: response.url,
+        rating: response.final_label,
+        groupId: response.groupId,
+        css: cssProps[response.final_label],
+        btn: dynamicButton[response.final_label],
         isExist: true,
       });
-      
-      props.setIsLoading(false)
 
+      setEvidenceList(
+        response.evidences.map((ele) => {
+          return (
+            <div className={"border-t border-solid " + result.css.border}>
+              <EvidenceItem claim={ele.claim} evidence={ele.evidence} />
+            </div>
+          );
+        })
+      );
+
+      console.log(result);
     } catch (e) {
-      console.log("Claim submission error: ", e);
+      console.log("Got error: ", e);
     }
   }
 
   useEffect(() => {
-    fetchData();
+    getClaim();
   }, [props.claim]);
 
   const res = result.isExist ? (
-    <div className={styles.container}>
+    <div className="w-full my-10">
+      <div className="flex ">
+        <div
+          className={
+            "-mr-10 pr-10 w-44 flex items-center justify-center rounded-l-3xl transition-all duration-200 " + `hover:${result.css.background_1} `  +
+            result.css.background_2
+          }
+        >
+          <TfiClose size={20}></TfiClose>
+        </div>
+
+        <div
+          className={
+            "flex-1 w-3/4 flex flex-col items-center justify-center p-10 rounded-3xl border-8 border-white border-solid z-50 " +
+            result.css.background_1
+          }
+        >
+          <Tag rating={result.rating}></Tag>
+          <p className="text-lg">{result.claim}</p>
+        </div>
+
+        <div
+          className={
+            "-ml-10 pl-10 w-44 flex items-center justify-center rounded-r-3xl " + `hover:${result.css.background_1} `  +
+            result.css.background_2
+          }
+        >
+          <TfiAngleRight size={20}></TfiAngleRight>
+        </div>
+      </div>
+
       <div
-        // style={{ background: myBackground.bg_2 }}
-        className={`${styles.close_button} ${result.btn}`}
-        onClick={() => setResult({ ...result, isExist: false })}
+        className={
+          "mx-auto w-11/12 max-h-max overflow-scroll border-8 border-t-0 border-solid rounded-b-3xl " +
+          result.css.border
+        }
       >
-        <TfiClose />
+        {evidenceList}
       </div>
-
-      <div
-        style={{ background: result.bg.bg_1 }}
-        className={`${styles.result_container}`}
-      >
-        <div className={styles.claim_container}>
-          <h2 className="heading-small">Nhận Định</h2>
-          <p>{result.claim}</p>
-        </div>
-
-        <div className={styles.evidence_container}>
-          <div className={styles.evidence_header}>
-            <h2 className="heading-small">Minh Chứng</h2>
-            <div>
-              <a
-                target="_blank"
-                href={result.url}
-                className={styles.evidence_url}
-              >
-                {result.provider}
-              </a>
-            </div>
-          </div>
-          <p>{result.evidence}</p>
-        </div>
-      </div>
-
-      <div style={{ background: result.bg.bg_2 }} className={styles.nav}>
-        <div ref={scrollSection} className={styles.nav_wrapper}>
-          <Tag rating={result.rating} />
-          <div>
-            <ul>
-              <li>
-                <Link href={"/"}>
-                  <div className={`${styles.nav_link}`}> Đánh Giá</div>
-                </Link>
-              </li>
-              <li>
-                <div className={`${styles.nav_link} ${styles.nav_link_more}`}>
-                  <Link href={"/"}>Xem Them</Link>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <Link
-        href={`/fact-check/${result.groupId}`}
-        // style={{ background: myBackground.bg_2 }}
-        className={`${styles.forward_button} ${result.btn}`}
-      >
-        <TfiAngleRight />
-      </Link>
     </div>
   ) : (
     <div></div>

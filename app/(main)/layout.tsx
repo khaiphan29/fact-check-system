@@ -1,7 +1,6 @@
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import "@/styles/globals.css";
-import "@/styles/main.css";
 import React from "react";
 import { Providers } from "../providers";
 

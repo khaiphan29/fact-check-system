@@ -5,18 +5,17 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { RiAtFill } from "react-icons/ri";
 import { signOut } from "next-auth/react";
+import styles from "@/styles/NavLink.module.css"
 
 interface Props {
   name: string;
   href: string;
-  className: string[];
 }
 
 const NavLink = (props: Props) => {
-  const activeClass = "nav__link-active";
   const pathName = usePathname();
 
-  if (props.name === "user") {
+  if (props.name === "User") {
     return (
       <Link
         href={props.href}
@@ -28,8 +27,8 @@ const NavLink = (props: Props) => {
   } else if (props.name === "Đăng xuất") {
     return (
       <div
-        className={`${props.className.reduce((acc, cur) => acc + cur)} ${
-          pathName.includes(props.href) ? activeClass : ''
+        className={`${styles.container} ${
+          pathName.includes(props.href) ? styles.active : ''
         }`}
         onClick={() => signOut()}
       >
@@ -41,8 +40,8 @@ const NavLink = (props: Props) => {
   return (
     <Link
       href={props.href}
-      className={`${props.className.reduce((acc, cur) => acc + cur)} ${
-        pathName.includes(props.href) ? activeClass : ''
+      className={`${styles.container} ${
+        pathName.includes(props.href) ? styles.active : ''
       }`}
     >
       {props.name}

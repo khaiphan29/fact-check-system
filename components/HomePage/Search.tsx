@@ -50,7 +50,7 @@ const Search = () => {
       setClaim("");
       setTimeout(setClaim, 100, formClaim);
 
-      setIsLoading(true)
+      setIsLoading(true);
 
       if (searchContainer.current) {
         window.scrollTo({
@@ -108,6 +108,8 @@ const Search = () => {
       )}
 
       {claim && <SearchResult claim={claim} setIsLoading={setIsLoading} />}
+
+      <SearchResult claim={claim} setIsLoading={setIsLoading} />
     </div>
   );
 };

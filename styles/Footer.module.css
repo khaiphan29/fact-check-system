@@ -1,0 +1,36 @@
+.container {
+  @apply sticky top-full text-white pt-16 pb-5;
+
+  background-image: linear-gradient(
+    to right,
+    rgb(var(--color-dotteds-rgb)) 0 10%,
+    rgba(255, 255, 255, 0) 10%
+  );
+  background-position: top;
+  background-size: 8px 1px;
+  background-repeat: repeat-x;
+}
+
+.about_btn {
+  @apply rounded-xl py-5 px-4 mr-auto text-sm font-light transition-all duration-200;
+  /* padding: 18px 16px;
+  border-radius: 12px;
+  margin-right: auto; */
+
+  background-color: var(--primary-gray);
+
+  /* font-size: 14px;
+  font-weight: 300; */
+  color: var(--primary-black);
+
+  /* transition: 0.2s; */
+}
+
+.about_btn:hover {
+  @apply filter brightness-90;
+}
+
+.link {
+  @apply font-semibold;
+  color: var(--primary-black);
+}

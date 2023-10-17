@@ -9,71 +9,56 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 const Nav = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session)
+  console.log(session);
 
   return (
-    <nav className="nav">
-      <div className="nav__left">
+    <nav className="flex-shrink-0 sticky top-0 -mx-10 py-6 px-10 flex justify-center items-center bg-white z-50 overflow-hidden">
+      <div className="absolute left-0 ml-20 items-center">
         <Link href={"/"} style={{ height: "auto", alignItems: "center" }}>
           <Image
             src={logo.src}
             alt="logo"
             width={153}
             height={41}
-            className="nav__logo"
+            className="h-7 w-auto"
           />
         </Link>
       </div>
 
-      <ul className="nav__middle">
+      {/* ANCHOR Middle Area */}
+      <ul className="flex justify-center items-center gap-7">
         <li>
-          <NavLink name="Kiểm Tin" href="/fact-check" className={["nav__link"]} />
+          <NavLink name="Kiểm Tin" href="/fact-check" />
         </li>
         <li>
-          <NavLink
-            name="Bài Phân Tích"
-            href="/post"
-            className={["nav__link"]}
-          />
+          <NavLink name="Bài Phân Tích" href="/post" />
         </li>
-        <li>
+        {/* <li>
           <NavLink
             name="Thống Kê"
             href="/statistic"
-            className={["nav__link"]}
           />
-        </li>
+        </li> */}
         <li>
-          <NavLink
-            name="Về Chúng Tôi"
-            href="/about"
-            className={["nav__link"]}
-          />
+          <NavLink name="Về Chúng Tôi" href="/about" />
         </li>
       </ul>
 
-      <div className="nav__right">
-        <ul>
+      {/* ANCHOR Right Area */}
+      <div className="absolute right-0 mr-20">
+        <ul className="flex items-center gap-7">
           <li>
             {!session ? (
-              <NavLink
-                name="Đăng nhập"
-                href="/login"
-                className={["nav__link"]}
-              />
+              <NavLink name="Đăng nhập" href="/login" />
             ) : (
-              <NavLink name="Đăng xuất" href="" className={["nav__link"]} />
+              <NavLink name="Đăng xuất" href="" />
             )}
           </li>
           <li>
             {!session ? (
-              <NavLink
-                name="Đăng ký"
-                href="/register"
-                className={["nav__link"]}
-              />
+              <NavLink name="Đăng ký" href="/register" />
             ) : (
-              <NavLink name="user" href="/profile" className={["nav__link"]} />
+              <NavLink name="User" href="/profile" />
             )}
           </li>
         </ul>

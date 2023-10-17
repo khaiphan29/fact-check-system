@@ -1,0 +1,22 @@
+.container {
+  @apply transition-all duration-200 ease-in-out text-sm font-light;
+  color: var(--nav-inactive);
+
+  /* font-size: 14px;
+  font-weight: 300; */
+  /* transition: 0.2s; */
+}
+
+.container:hover {
+  @apply py-3 px-4 rounded-2xl font-medium;
+  background-color: var(--primary-beige);
+  color: var(--primary-black);
+}
+
+.active {
+  @apply py-3 px-4 rounded-2xl font-medium;
+
+  /* border: 1px solid var(--primary-black); */
+  background-color: var(--primary-beige);
+  color: var(--primary-black);
+}

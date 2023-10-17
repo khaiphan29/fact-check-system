@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
       <Search />
-      <News />
+      {/* <News /> */}
     </div>
   );
 };

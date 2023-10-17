@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   --primary-black: #2e2f30;
   /* --primary-light-gray: #f8f8f8; */
@@ -76,6 +80,10 @@ textarea {
 pre {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+li {
+  list-style-type: none;
 }
 
 ul {

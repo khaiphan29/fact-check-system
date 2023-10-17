@@ -21,7 +21,7 @@ async function getResult(claim: string) {
 
 export async function POST(request: Request) {
   // const data = await request.json();
-  const data: FactCheckResquest = await request.json();
+  const data: FactCheckRequest = await request.json();
   const ai_data: AIResponse = await getResult(data.claim)
 
   const response: FactCheckResponse = {
