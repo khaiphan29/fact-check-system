@@ -4,12 +4,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
-  const data: { email: string } = await request.json();
-
-  // console.log("email: ", data.email)
-  if (!data.email) {
-    return new NextResponse(JSON.stringify([]));
-  }
+  const data: CreateClaimGroupRequest = await request.json();
 
   const user = await prisma.user.findFirst({
     where: {
@@ -17,16 +12,16 @@ export async function POST(request: Request) {
     },
   });
 
-  const groups = await prisma.claim_group.findMany({
-    where: {
+  const newGroup = await prisma.claim_group.create({
+    data: {
       owner_id: user?.id,
-    },
-    orderBy: {
-      modified_date: "desc",
+      name: data.name,
     },
   });
 
   //console.log(groups)
 
-  return new NextResponse(JSON.stringify({ groups }));
+  return new NextResponse(
+    JSON.stringify({ id: newGroup.id, name: newGroup.name })
+  );
 }

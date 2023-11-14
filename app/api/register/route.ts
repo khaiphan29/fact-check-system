@@ -22,12 +22,9 @@ export async function POST(request: Request) {
   });
 
   if (user) {
-    return new Response(
-      JSON.stringify({
-        msg: 0,
-        data,
-      })
-    );
+    return new Response(JSON.stringify({ msg: "Người dùng đã tồn tại" }), {
+      status: 409,
+    });
   }
 
   const newUser = await prisma.user.create({
@@ -35,14 +32,23 @@ export async function POST(request: Request) {
       username: data.username,
       email: data.email,
       password: data.password,
-      role: "1",
+      name: data.email,
+      role_id: 1,
     },
   });
+
+  await prisma.claim_group.create({
+    data: {
+      owner_id: newUser.id,
+      name: "Kiểm Tin Nhanh",
+    },
+  });
+
+  await prisma.$disconnect;
 
   if (newUser) {
     return new Response(
       JSON.stringify({
-        msg: 1,
         ...data,
       })
     );

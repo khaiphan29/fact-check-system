@@ -9,10 +9,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 const Nav = async () => {
   const session = await getServerSession(authOptions);
 
-  console.log(session);
-
   return (
-    <nav className="flex-shrink-0 sticky top-0 -mx-10 py-6 px-10 flex justify-center items-center bg-white z-50 overflow-hidden">
+    <nav className="flex-shrink-0 sticky top-0 -mx-10 py-6 px-10 flex justify-center items-center bg-white z-40 overflow-hidden">
       <div className="absolute left-0 ml-20 items-center">
         <Link href={"/"} style={{ height: "auto", alignItems: "center" }}>
           <Image
@@ -31,14 +29,8 @@ const Nav = async () => {
           <NavLink name="Kiểm Tin" href="/fact-check" />
         </li>
         <li>
-          <NavLink name="Bài Phân Tích" href="/post" />
+          <NavLink name="Thống Kê" href="/statistic" />
         </li>
-        {/* <li>
-          <NavLink
-            name="Thống Kê"
-            href="/statistic"
-          />
-        </li> */}
         <li>
           <NavLink name="Về Chúng Tôi" href="/about" />
         </li>

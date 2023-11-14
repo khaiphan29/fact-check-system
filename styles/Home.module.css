@@ -77,12 +77,6 @@
   margin-bottom: 30px;
 }
 
-/* ANCHOR LOADING DIV */
-.loading_div {
-  display: flex;
-  justify-content: center;
-}
-
 /* ANCHOR ALERT */
 .alert {
   color: #fa5d29;

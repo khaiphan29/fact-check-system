@@ -1,7 +1,6 @@
 import Nav from "@/components/Nav";
 // import Footer from "@/components/Footer";
 import "@/styles/globals.css";
-import "@/styles/main.css";
 import React from "react";
 import { Providers } from "../../providers";
 import styles from "@/styles/FactCheckPage/FactCheck.module.css";
@@ -26,6 +25,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body suppressHydrationWarning={true}>
         <Providers>
           <div className={styles.outer_container}>
+            
             <Nav />
             {children}
           </div>

@@ -2,17 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "@/styles/FactCheckPage/ChatSection.module.css";
-import ClaimResult from "./ClaimResult";
 import SearchForm from "@/components/SearchForm";
 import { useRouter } from "next/navigation";
+import { group } from "console";
 
-const BlankChatSection = (props: { email: string }) => {
-  useEffect(() => {
-    // fetchData();
-  }, []);
-
+const BlankChatSection = (props: {
+  email: string;
+  setGroups: React.Dispatch<
+    React.SetStateAction<CreateClaimGroupResponse[]>
+  >;
+  groups: CreateClaimGroupResponse[]
+}) => {
   const [isAlert, setAlert] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   const [form, setForm] = React.useState({
     claim: "",
@@ -30,28 +32,24 @@ const BlankChatSection = (props: { email: string }) => {
     });
   }
 
-  async function fetchClaimData(claim: String) {
+  async function fetchClaimData(name: String) {
     try {
-      const res: Response = await fetch(
-        "http://localhost:3000/api/fact-check",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            claim: claim,
-            email: props.email,
-            isQuick: false,
-            groupId: -1,
-          }),
-        }
-      );
-      console.log("Complete fetch");
+      const res: Response = await fetch("/api/create-claim-group", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: props.email,
+          name: name,
+        }),
+      });
 
-      const data: { groupId: string } = await res.json();
+      const data: CreateClaimGroupResponse = await res.json();
 
-      router.push(`/fact-check/${data.groupId}`);
+      props.setGroups([...props.groups, data])
+
+      router.push(`/fact-check/${data.id}`);
     } catch (e) {
       console.log("Claim submission error: ", e);
     }
@@ -75,7 +73,7 @@ const BlankChatSection = (props: { email: string }) => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.blank_container}>Kiểm Tin</div>
+      <div className={styles.blank_container}>Tạo Nhóm</div>
 
       <div className={styles.input_container}>
         <div className={styles.input_wrapper}>
@@ -84,10 +82,10 @@ const BlankChatSection = (props: { email: string }) => {
             handleSubmit={handleSubmit}
             form={form}
             className={styles.form_wrapper}
+            placeholder="Nhập tên nhóm tin..."
           />
           <p className={styles.input_reminder}>
-            Gửi một mẫu tin ngắn tại để kiểm tra tính xác thực tại đây. Hệ thống
-            hoạt động tốt với một mẫu tin và nội dung không mang tính cá nhân.
+            Tạo nhóm tin giúp quản lý kết quả dễ dàng hơn.
           </p>
         </div>
       </div>

@@ -5,16 +5,9 @@ import Link from "next/link";
 import "@/styles/login-register.css";
 import { signIn } from "next-auth/react";
 import { useFormik } from "formik";
-// import { getSession, useSession, signOut } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import styles from "@/styles/Auth.module.css";
-
-interface RegisterData {
-  email: string;
-  username: string;
-  password: string;
-  cpassword: string;
-}
+import { fetchRegistry } from "@/utils/auth";
 
 const RegisterForm = () => {
   const [registerError, setRegisterError] = React.useState("");
@@ -34,38 +27,31 @@ const RegisterForm = () => {
     formik.handleChange(e);
   }
 
-  async function onSubmit(values: RegisterData) {
+  async function onSubmit(values: RegisterFormData) {
     console.log(values);
     if (values.password != values.cpassword) {
       setRegisterError("Mật khẩu không khớp.");
       return;
     }
 
-    console.log(`Fetching... /api/register`);
-
-    const res = await fetch(`/api/register`, {
-      method: "POST",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
+    const res: Response = await fetchRegistry({
+      email: values.email,
+      username: values.username,
+      password: values.password,
     });
 
-    const data: {
-      msg: number;
-      username: string;
-      password: string;
-    } = await res.json();
-
-    console.log(data);
-    if (data.msg === 0) {
-      setRegisterError("Thông tin người dùng đã tồn tại");
-    } else {
+    if (res.status == 409) {
+      const {msg}: ErrorResponse = await res.json();
+      setRegisterError(msg);
+    }
+    else if (res.ok) {
+      const data: RegisterResponse = await res.json();
       signIn("credentials", {
         username: data.username,
         password: data.password,
       });
+    } else {
+      setRegisterError("Lỗi đăng ký không xác định");
     }
   }
 

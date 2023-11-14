@@ -16,10 +16,20 @@ const Tag = (props: { rating: number }) => {
       ? styles.bg_tag_refute
       : styles.bg_tag_neutral;
 
+  const cssProps: string[] = [
+    "text-refuted_2",
+    "text-approved_2",
+    "text-neutral_2",
+  ];
+
   return (
-    <div className={`${styles.container} ${bg}`}>
+    <div className={`${styles.container} ${bg} gap-4`}>
       <Image src={image.src} alt="tag" width={25} height={25}></Image>
-      <p className={styles.title}>
+      <p
+        className={
+          "uppercase text-base font-semibold "
+        }
+      >
         {props.rating === 1
           ? "Tin xác thực"
           : props.rating === 0

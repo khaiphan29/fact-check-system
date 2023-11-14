@@ -14,17 +14,7 @@ const Page = ({
   params: { id?: string[] };
   email: string;
 }) => {
-  //   let { data: session } = useSession();
-  //   // if (!session) {
-  //   //   ({ data: session } = useSession());
-  //   // }
-
-  const [groups, setGroups] = React.useState<
-    {
-      id: string;
-      name: string;
-    }[]
-  >([]);
+  const [groups, setGroups] = React.useState<CreateClaimGroupResponse[]>([]);
 
   async function fetchGroupData() {
     try {
@@ -39,7 +29,7 @@ const Page = ({
       });
       const data: {
         groups: {
-          id: string;
+          id: number;
           name: string;
         }[];
       } = await res.json();
@@ -64,9 +54,9 @@ const Page = ({
     <main className={styles.inner_container}>
       <NavSection groups={groups} />
       {params.id ? (
-        <ChatSection id={params.id[0]} email={email} />
+        <ChatSection id={Number(params.id[0])} email={email} />
       ) : (
-        <BlankChatSection email={email} />
+        <BlankChatSection email={email} setGroups={setGroups} groups={groups} />
       )}
     </main>
   );

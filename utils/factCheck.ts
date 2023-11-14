@@ -1,8 +1,8 @@
-export async function checkClaim(
+export async function quickCheckClaim(
   request: FactCheckRequest
-): Promise<FactCheckResponse> {
+): Promise<Response> {
   try {
-    const res: Response = await fetch("/api/mockup-fact-check", {
+    const res: Response = await fetch("/api/fact-check", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -14,11 +14,8 @@ export async function checkClaim(
         groupId: -1,
       }),
     });
-
-    const data: FactCheckResponse = await res.json();
-    console.log(data);
     
-    return data;
+    return res;
   } catch (e) {
     console.log("Internal Fetch Error", e);
     throw new Error("Claim Submission Error");

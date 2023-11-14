@@ -10,7 +10,7 @@ import { useSession } from "next-auth/react";
 
 const NavSection = (props: {
   groups: {
-    id: string;
+    id: number;
     name: string;
   }[];
 }) => {

@@ -13,6 +13,7 @@ interface Props {
   className?: string;
   bg?: string;
   darkMode?: boolean;
+  placeholder?: string;
 }
 
 const SearchForm = (props: Props) => {
@@ -53,7 +54,7 @@ const SearchForm = (props: Props) => {
             }}
             value={props.form.claim}
             autoComplete="off"
-            placeholder="Nhập thông tin cần kiểm tra..."
+            placeholder={props.placeholder ? props.placeholder : "Nhập thông tin cần kiểm tra..."}
             className={`${styles.search_input} ${
               props.darkMode ? styles.dark_search_input : ""
             }`}

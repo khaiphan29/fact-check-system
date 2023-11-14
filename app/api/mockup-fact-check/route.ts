@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   console.log("Mockup Request Handling...");
   return new NextResponse(
     JSON.stringify({
-        "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước. Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
+        "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
         "final_label": 1,
         "evidences": [
           {

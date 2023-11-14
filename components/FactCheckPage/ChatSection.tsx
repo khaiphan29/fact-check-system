@@ -4,44 +4,32 @@ import React, { useEffect, useState } from "react";
 import styles from "@/styles/FactCheckPage/ChatSection.module.css";
 import ClaimResult from "./ClaimResult";
 import SearchForm from "@/components/SearchForm";
-import { useSession } from "next-auth/react";
 
-const ChatSection = (props: { id: string; email: string }) => {
+const ChatSection = (props: { id: number; email: string }) => {
   const [result, setResult] = useState<React.JSX.Element[]>([]);
 
   async function fetchData() {
     try {
-      const res = await fetch("/api/group-result", {
+      const res = await fetch("/api/mockup-claim-result", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: props.email,
-          groupId: Number(props.id),
+          groupId: props.id,
         }),
       });
 
-      const data: {
-        claims: {
-          id: string;
-          rating: number;
-          claim: string;
-          evidence: string;
-          evidence_provider: string;
-          url: string;
-        }[];
-      } = await res.json();
-
+      const data: ClaimResultResponse = await res.json();
       console.log(data);
 
-      const retData = data.claims;
-      const tempList: React.JSX.Element[] = [];
-      for (let i = 0; i < retData.length; i++) {
-        tempList.push(<ClaimResult {...retData[i]} />);
-      }
-
-      setResult(tempList);
+      setResult(
+        data.results.map((ele) => {
+          return (
+            <ClaimResult id={ele.id} claim={ele.claim} rating={ele.rating} />
+          );
+        })
+      );
     } catch (e) {
       console.log(e);
     }
@@ -52,12 +40,9 @@ const ChatSection = (props: { id: string; email: string }) => {
   }, []);
 
   const [isAlert, setAlert] = useState(false);
-
   const [form, setForm] = React.useState({
     claim: "",
   });
-
-  const [claim, setClaim] = React.useState("");
 
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = e.target;
@@ -109,11 +94,13 @@ const ChatSection = (props: { id: string; email: string }) => {
 
     fetchClaimData(form.claim);
   }
+
+
   return (
     <div className={styles.container}>
-      <div className={styles.result_container}>
+      <div className="p-10 overflow-scroll grid grid-cols-2 gap-10">
         {result}
-        <div style={{ height: 150 }}></div>
+        <div className="h-[100px]"></div>
       </div>
       <div className={styles.input_container}>
         <div className={styles.input_wrapper}>
