@@ -5,28 +5,27 @@ import styles from "@/styles/FactCheckPage/ChatSection.module.css";
 import ClaimResult from "./ClaimResult";
 import SearchForm from "@/components/SearchForm";
 
-const ChatSection = (props: { id: number; email: string }) => {
-  const [result, setResult] = useState<React.JSX.Element[]>([]);
+import { getGroupResult } from "@/utils/factCheck";
+import PopUpClaimResult from "../PopUpClaimResult";
+
+const ChatSection = (props: { groupId: number; email: string }) => {
+  const [claims, setClaims] = useState<React.JSX.Element[]>([]);
+  const [popUpID, setPopUpID] = useState<number>(-1);
 
   async function fetchData() {
     try {
-      const res = await fetch("/api/mockup-claim-result", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          groupId: props.id,
-        }),
-      });
+      const response = await getGroupResult(props);
+      const data: GroupResultResponse = await response.json();
 
-      const data: ClaimResultResponse = await res.json();
-      console.log(data);
-
-      setResult(
-        data.results.map((ele) => {
+      setClaims(
+        data.claimList.map((ele) => {
           return (
-            <ClaimResult id={ele.id} claim={ele.claim} rating={ele.rating} />
+            <ClaimResult
+              id={ele.id}
+              claim={ele.claim}
+              rating={ele.rating}
+              setPopUpID={setPopUpID}
+            />
           );
         })
       );
@@ -67,7 +66,7 @@ const ChatSection = (props: { id: number; email: string }) => {
             claim: claim,
             email: props.email,
             isQuick: false,
-            groupId: Number(props.id),
+            groupId: Number(props.groupId),
           }),
         }
       );
@@ -95,11 +94,21 @@ const ChatSection = (props: { id: number; email: string }) => {
     fetchClaimData(form.claim);
   }
 
-
   return (
     <div className={styles.container}>
+      {/* Pop-up Result */}
+      {popUpID > 0 ? (
+        <PopUpClaimResult
+          claimId={popUpID}
+          email={props.email}
+          setPopUpID={setPopUpID}
+        />
+      ) : (
+        <div></div>
+      )}
+      
       <div className="p-10 overflow-scroll grid grid-cols-2 gap-10">
-        {result}
+        {claims}
         <div className="h-[100px]"></div>
       </div>
       <div className={styles.input_container}>

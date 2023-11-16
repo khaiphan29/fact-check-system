@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   const newGroup = await prisma.claim_group.create({
     data: {
       owner_id: user?.id,
-      name: data.name,
+      name: data.groupName,
     },
   });
 

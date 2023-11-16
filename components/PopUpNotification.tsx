@@ -8,10 +8,10 @@ interface Props {
 
 const Error = (props: Props) => {
   return (
-    <div>
+    <div className="transition-all duration-200">
       {/* Background */}
       <div
-        className="fixed inset-0 bg-black bg-opacity-95 z-40 transition-all duration-200"
+        className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-md z-40 transition-all duration-200"
         onClick={() => {
           props.setCloseFunction(false);
         }}

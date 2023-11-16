@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -9,7 +11,7 @@ import ReactLoading from "react-loading";
 import EvidenceItem from "./EvidenceItem";
 import PopUp from "../PopUpNotification";
 import { TfiAngleRight, TfiClose } from "react-icons/tfi";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Props {
   claim: string;
@@ -39,7 +41,9 @@ const SearchResult = (props: Props) => {
 
   function forwardToGroup(groupId: number) {
     if (session) {
-      redirect(`/fact-check/${groupId}`);
+      window.open(`/fact-check/${groupId}`, "_blank");
+      // push(`/fact-check/${groupId}`);
+      return;
     }
     setErrorMsg("Vui lòng đăng nhập để lưu lịch sử kiểm tin");
     setIsError(true);

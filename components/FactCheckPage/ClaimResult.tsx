@@ -5,7 +5,11 @@ import styles from "@/styles/FactCheckPage/ClaimResult.module.css";
 import Tag from "../HomePage/Tag";
 import { TfiInfoAlt, TfiWrite } from "react-icons/tfi";
 
-const Result = (props: ClaimResult) => {
+interface Props extends ClaimResult {
+  setPopUpID: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Result = (props: Props) => {
   const bg_1 =
     props.rating === 0
       ? "bg-refuted_1"
@@ -28,7 +32,12 @@ const Result = (props: ClaimResult) => {
       : "border-neutral_1";
 
   return (
-    <div className="rounded-3xl transition-all duration-200 hover:scale-105">
+    <div
+      className="rounded-3xl transition-all duration-200 hover:scale-105"
+      onClick={() => {
+        props.setPopUpID(props.id);
+      }}
+    >
       <div className={"py-4 rounded-3xl " + bg_2}>
         <div className="w-max mx-auto">
           <Tag rating={props.rating}></Tag>
@@ -37,7 +46,10 @@ const Result = (props: ClaimResult) => {
 
       <div>
         <p
-          className={"text-justify text-base border-2 border-t-0 border-solid rounded-b-3xl p-4 " + border}
+          className={
+            "text-justify text-base border-2 border-t-0 border-solid rounded-b-3xl p-4 " +
+            border
+          }
         >
           {props.claim}
         </p>

@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  z-index: 999;
+  z-index: 30;
 }
 
 .upper_left_container {

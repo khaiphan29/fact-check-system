@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import ChatSection from "@/components/FactCheckPage/ChatSection";
-import NavSection from "@/components/FactCheckPage/NavSection";
 import styles from "@/styles/FactCheckPage/FactCheck.module.css";
 import { useSession } from "next-auth/react";
 import BlankChatSection from "@/components/FactCheckPage/BlankChatSection";

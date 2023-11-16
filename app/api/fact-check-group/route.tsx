@@ -3,19 +3,27 @@ import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+function notFoundResponse() {
+  return new Response(
+    JSON.stringify({
+      msg: "Không xác định người dùng hoặc nhóm tin",
+    }),
+    {
+      status: 404,
+    }
+  );
+}
+
 export async function POST(request: Request) {
-  const data: { email: string } = await request.json();
+  const data: FactCheckGroupRequest = await request.json();
 
-  // console.log("email: ", data.email)
-  if (!data.email) {
-    return new NextResponse(JSON.stringify([]));
-  }
-
-  const user = await prisma.user.findFirst({
+  const user = await prisma.user.findUnique({
     where: {
       email: data.email,
     },
   });
+
+  if (!user) return notFoundResponse();
 
   const groups = await prisma.claim_group.findMany({
     where: {
@@ -24,9 +32,17 @@ export async function POST(request: Request) {
     orderBy: {
       modified_date: "desc",
     },
+    select: {
+      id: true,
+      name: true,
+    },
   });
 
   //console.log(groups)
+  prisma.$disconnect;
 
-  return new NextResponse(JSON.stringify({ groups }));
+  const response: FactCheckGroupResponse = {
+    groupList: groups,
+  };
+  return new NextResponse(JSON.stringify(response));
 }

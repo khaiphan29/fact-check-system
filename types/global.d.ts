@@ -1,5 +1,5 @@
 interface ErrorResponse {
-  msg: string
+  msg: string;
 }
 
 interface EvidenceResult {
@@ -33,28 +33,42 @@ interface AIResponse {
   final_label: number;
 }
 
+interface FactCheckGroupRequest {
+  email: string;
+}
+
+interface FactCheckGroupResponse {
+  groupList: {
+    id: number;
+    name: string;
+  }[];
+}
+
+interface GroupResultRequest {
+  groupId: number;
+  email: string;
+}
+
+interface GroupResultResponse {
+  claimList: {
+    id: number;
+    rating: number;
+    claim: string;
+  }[];
+}
+
 interface CreateClaimGroupRequest {
   email: string;
-  name: string;
+  groupName: string;
 }
 
-interface CreateClaimGroupResponse {
-  id: number;
-  name: string;
+interface SingleClaimRequest {
+  email: string;
+  claimId: number;
 }
 
-interface ClaimResultRequest {
-  groupId: number;
-}
-
-interface ClaimResultResponse {
-  results: ClaimResult[];
-}
-
-interface ClaimResult {
-  id: number;
-  rating: number;
-  claim: string;
+interface SingleClaimResponse extends FactCheckResponse {
+  claimId: number;
 }
 
 // ANCHOR Auth
@@ -81,4 +95,10 @@ interface SearchResultCSS {
   background_1: string;
   background_2: string;
   border: string;
+}
+
+interface ClaimResult {
+  id: number;
+  rating: number;
+  claim: string;
 }

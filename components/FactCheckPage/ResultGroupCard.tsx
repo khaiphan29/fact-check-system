@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { TfiCommentAlt, TfiPencilAlt, TfiClose } from "react-icons/tfi";
 
 interface Props {
-  id: string;
+  id: number;
   title: string;
 }
 
@@ -14,8 +14,8 @@ const ResultGroup = (props: Props) => {
   const path = usePathname().split("/");
   const router = useRouter();
   let isActive = false;
-  // console.log(props.id)
-  isActive = path[path.length - 1] === props.id;
+  
+  isActive = path[path.length - 1] === props.id.toString();
 
   async function fetchDelete() {
     const res: Response = await fetch("/api/delete-fact-check-group", {
@@ -25,6 +25,7 @@ const ResultGroup = (props: Props) => {
       },
       body: JSON.stringify({
         id: props.id,
+        name: props.title,
       }),
     });
 
@@ -56,9 +57,13 @@ const ResultGroup = (props: Props) => {
             <div className={styles.card_btn}>
               <TfiPencilAlt />
             </div>
-            <div className={styles.card_btn} onClick={handleDelete}>
-              <TfiClose />
-            </div>
+            {props.title != "Kiểm Tin Nhanh" ? (
+              <div className={styles.card_btn} onClick={handleDelete}>
+                <TfiClose />
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         )}
       </div>

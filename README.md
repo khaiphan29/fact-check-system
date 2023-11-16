@@ -8,7 +8,8 @@ npm install
 ### local env set up
 Create file .env.local at root dir
 ```
-AI_URL=http://127.0.0.1:8000/claim
+SERVERHOST=http://localhost:3000
+AI_URL=http://localhost:8000/claim
 ```
 
 ### NextAuth set up (Currently not work)

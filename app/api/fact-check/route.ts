@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     },
   });
 
-  if (!claimGroup) notFoundResponse();
+  if (!claimGroup) return notFoundResponse();
 
   const user = await prisma.user.findUnique({
     where: {
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     },
   });
 
-  if (!user) notFoundResponse();
+  if (!user) return notFoundResponse();
 
   try {
     const aiData: AIResponse = await fetchModelResult(data.claim);
@@ -90,6 +90,15 @@ export async function POST(request: Request) {
       aiData.final_label,
       aiData.evidences
     );
+
+    await prisma.claim_group.update({
+      where: {
+        id: claimGroup.id,
+      },
+      data: {
+        modified_date: new Date()
+      }
+    });
 
     const response: FactCheckResponse = {
       ...aiData,
