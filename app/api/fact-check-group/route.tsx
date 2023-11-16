@@ -38,6 +38,8 @@ export async function POST(request: Request) {
     },
   });
 
+  
+
   //console.log(groups)
   prisma.$disconnect;
 

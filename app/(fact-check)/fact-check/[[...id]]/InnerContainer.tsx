@@ -12,7 +12,7 @@ import ResultGroup from "@/components/FactCheckPage/ResultGroupCard";
 import BlankChatSection from "@/components/FactCheckPage/BlankChatSection";
 
 import { getFactCheckGroup } from "@/utils/factCheck";
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import CreateGroupForm from "@/components/FactCheckPage/CreateGroupForm";
 
 const Page = ({
@@ -34,12 +34,16 @@ const Page = ({
 
       if (res.ok) {
         const { groupList }: FactCheckGroupResponse = await res.json();
+        let idFound: boolean = false;
+
         setGroups(
-          groupList.map((ele) => <ResultGroup id={ele.id} title={ele.name} />)
+          groupList.map((ele) => {
+            if (params.id && params.id[0] === ele.id.toString()) idFound = true;
+            return <ResultGroup id={ele.id} title={ele.name} />;
+          })
         );
 
-        if (!params.id) {
-          console.log("Check redirect");
+        if (!params.id || !idFound) {
           push(`/fact-check/${groupList[0].id}`);
         }
       }
@@ -57,7 +61,12 @@ const Page = ({
 
   return (
     <main className={styles.inner_container}>
-      {showCreateGroupForm && <CreateGroupForm email={email} setCloseFunction={setShowCreateGroupForm} />}
+      {showCreateGroupForm && (
+        <CreateGroupForm
+          email={email}
+          setCloseFunction={setShowCreateGroupForm}
+        />
+      )}
       {/* ANCHOR LEFT CONTAINER */}
       <div className={styles.left_container}>
         <div className={styles.upper_left_container}>

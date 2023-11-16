@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Prisma, PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 async function getResult(claim: string) {
   const res: Response = await fetch(process.env.AI_URL!, {
@@ -20,10 +20,11 @@ async function getResult(claim: string) {
 
 export async function POST(request: Request) {
   console.log("Mockup Request Handling...");
+  const final_label = Math.floor(Math.random() * 3);
   return new NextResponse(
     JSON.stringify({
         "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-        "final_label": 1,
+        "final_label": final_label,
         "evidences": [
           {
             "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",

@@ -7,6 +7,7 @@ import SearchForm from "@/components/SearchForm";
 
 import { getGroupResult } from "@/utils/factCheck";
 import PopUpClaimResult from "../PopUpClaimResult";
+import { notFound } from "next/navigation";
 
 const ChatSection = (props: { groupId: number; email: string }) => {
   const [claims, setClaims] = useState<React.JSX.Element[]>([]);
@@ -15,6 +16,10 @@ const ChatSection = (props: { groupId: number; email: string }) => {
   async function fetchData() {
     try {
       const response = await getGroupResult(props);
+      if (response.status === 401) {
+        return notFound();
+      }
+
       const data: GroupResultResponse = await response.json();
 
       setClaims(
@@ -106,7 +111,7 @@ const ChatSection = (props: { groupId: number; email: string }) => {
       ) : (
         <div></div>
       )}
-      
+
       <div className="p-10 overflow-scroll grid grid-cols-2 gap-10">
         {claims}
         <div className="h-[100px]"></div>

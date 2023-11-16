@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     writeResult(
       user!.id,
       claimGroup!.id,
-      aiData.claim,
+      data.claim,
       aiData.final_label,
       aiData.evidences
     );
@@ -96,12 +96,13 @@ export async function POST(request: Request) {
         id: claimGroup.id,
       },
       data: {
-        modified_date: new Date()
-      }
+        modified_date: new Date(),
+      },
     });
 
     const response: FactCheckResponse = {
       ...aiData,
+      claim: data.claim,
       url: "https://hcmut.edu.vn/",
       provider: "HCMUT",
       groupId: claimGroup!.id,

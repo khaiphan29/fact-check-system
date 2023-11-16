@@ -8,18 +8,6 @@ export async function POST(request: Request) {
 
   const claims = await prisma.claim.findMany({
     where: {
-      // AND: [
-      //   {
-      //     user: {
-      //       email: data.email,
-      //     },
-      //   },
-      //   {
-      //     claim_group: {
-      //       id: data.groupId,
-      //     },
-      //   },
-      // ],
       user: {
         email: data.email,
       },
@@ -36,6 +24,16 @@ export async function POST(request: Request) {
       created_date: "desc",
     },
   });
+
+  // const errorResponse: ErrorResponse = {
+  //   msg: "Không thể"
+  // }
+  
+  if (!claims.length) {
+    return new Response(JSON.stringify({}), {
+      status: 401,
+    });
+  }
 
   const response: GroupResultResponse = {
     claimList: claims.map((ele) => ({
