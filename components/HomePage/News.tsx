@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import NewsCard from "./NewsCard";
+import NewsCard from "./ResultLoading";
 import styles from "@/styles/News.module.css";
 import { TfiAngleRight } from "react-icons/tfi";
 

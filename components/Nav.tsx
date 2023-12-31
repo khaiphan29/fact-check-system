@@ -10,7 +10,7 @@ const Nav = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="flex-shrink-0 sticky top-0 -mx-10 py-6 px-10 flex justify-center items-center bg-white z-40 overflow-hidden">
+    <nav className="flex-shrink-0 sticky top-0 -mx-10 py-4 px-10 flex justify-center items-center bg-white z-40 overflow-hidden">
       <div className="absolute left-0 ml-20 items-center">
         <Link href={"/"} style={{ height: "auto", alignItems: "center" }}>
           <Image
@@ -29,7 +29,10 @@ const Nav = async () => {
           <NavLink name="Kiểm Tin" href="/fact-check" />
         </li>
         <li>
-          <NavLink name="Thống Kê" href="/statistic" />
+          <NavLink name="Thống Kê" href="/dashboard" />
+        </li>
+        <li>
+          <NavLink name="Dữ Liệu" href="/data-processing" />
         </li>
         <li>
           <NavLink name="Về Chúng Tôi" href="/about" />

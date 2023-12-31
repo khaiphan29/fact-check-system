@@ -1,10 +1,6 @@
 // "use client";
 
 import React, { useEffect, useState } from "react";
-import ChatSection from "@/components/FactCheckPage/ChatSection";
-import styles from "@/styles/FactCheckPage/FactCheck.module.css";
-import { useSession } from "next-auth/react";
-import BlankChatSection from "@/components/FactCheckPage/BlankChatSection";
 import InnerContainer from "./InnerContainer";
 
 import { getServerSession } from "next-auth/next";
@@ -19,7 +15,7 @@ const Page = async ({ params }: { params: { id?: string[] } }) => {
   
 
   return (
-    <InnerContainer params={params} email={session.user?.email!}/>
+    <InnerContainer params={params} email={session!.user?.email!}/>
   );
 };
 

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import  prisma  from "@/utils/prismaClient";
+import { FactCheckGroupRequest, FactCheckGroupResponse } from "@/types/global";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 function notFoundResponse() {
   return new Response(
@@ -35,13 +36,12 @@ export async function POST(request: Request) {
     select: {
       id: true,
       name: true,
+      modified_date: true,
     },
   });
 
-  
-
   //console.log(groups)
-  prisma.$disconnect;
+  // prisma.$disconnect;
 
   const response: FactCheckGroupResponse = {
     groupList: groups,

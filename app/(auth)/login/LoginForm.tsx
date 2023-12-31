@@ -28,7 +28,6 @@ const LoginForm = () => {
   });
 
   async function onSubmit(values: LoginData) {
-    console.log(values);
     signIn("credentials", {
       username: values.username,
       password: values.password,

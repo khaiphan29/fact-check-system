@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  --primary-black: #2e2f30;
+  --primary-black: #2e2f30; 
   /* --primary-light-gray: #f8f8f8; */
   --primary-light-gray: #eeeeee;
   --primary-gray: #e9e9e9;

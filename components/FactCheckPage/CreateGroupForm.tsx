@@ -3,6 +3,7 @@
 import React, { InputHTMLAttributes, useState } from "react";
 import { TfiClose } from "react-icons/tfi";
 import { useRouter } from "next/navigation";
+import { CreateClaimGroupRequest } from "@/types/global";
 
 interface Props {
   email: string;
@@ -30,7 +31,8 @@ const CreateGroupForm = (props: Props) => {
     };
 
     // valid req
-    const res = await fetch("create-claim-group", {
+    // console.log(groupName);
+    const res = await fetch("/api/create-claim-group", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,6 +46,7 @@ const CreateGroupForm = (props: Props) => {
       push("/fact-check");
     }
   }
+
   return (
     <div className="transition-all duration-200">
       {/* Background */}
@@ -69,6 +72,7 @@ const CreateGroupForm = (props: Props) => {
             placeholder="Tên Nhóm Tin..."
             onChange={handleChange}
             className="focus:outline-none"
+            autoComplete="off"
           />
         </form>
       </div>

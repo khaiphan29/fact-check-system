@@ -2,10 +2,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import { NextAuthOptions } from "next-auth";
-import { Prisma, PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prismaClient";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -62,7 +62,7 @@ export const authOptions: NextAuthOptions = {
 
 async function auth(req: NextApiRequest, res: NextApiResponse) {
   // Do whatever you want here, before the request is passed down to `NextAuth`
-  console.log(req.body);
+  // console.log(req.body);
   return await NextAuth(req, res, authOptions);
 }
 

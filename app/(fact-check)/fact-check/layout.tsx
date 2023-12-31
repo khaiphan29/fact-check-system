@@ -3,7 +3,7 @@ import Nav from "@/components/Nav";
 import "@/styles/globals.css";
 import React from "react";
 import { Providers } from "../../providers";
-import styles from "@/styles/FactCheckPage/FactCheck.module.css";
+import styles from "@/styles/FactCheckPage/FactCheckMgmt.module.css";
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";

@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prismaClient";
+import { CreateClaimGroupRequest } from "@/types/global";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   const data: CreateClaimGroupRequest = await request.json();
+
+  console.log("Creating new group");
 
   const user = await prisma.user.findFirst({
     where: {

@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import { useSearchParams } from "next/navigation";
 import styles from "@/styles/Auth.module.css";
 import { fetchRegistry } from "@/utils/auth";
+import { ErrorResponse, RegisterFormData, RegisterResponse } from "@/types/global";
 
 const RegisterForm = () => {
   const [registerError, setRegisterError] = React.useState("");

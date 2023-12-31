@@ -1,3 +1,5 @@
+import { AIResponse } from "@/types/global";
+
 const mockupURL: string = process.env.SERVERHOST+"/api/mockup-fact-check";
 const realURL: string = process.env.AI_URL!;
 
@@ -12,6 +14,17 @@ export async function fetchModelResult(claim: string): Promise<AIResponse> {
         claim: claim,
       }),
     });
+
+    if (res.status === 204) {
+      const data: AIResponse = {
+        claim: "",
+        evidence: "",
+        final_label: 2,
+        provider: "",
+        url: ""
+      }
+      return data
+    }
   
     const data: AIResponse = await res.json();
     return data;

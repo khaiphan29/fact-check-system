@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "BK Fact Check",
+  "description": "Search for fake news quickly and easily",
+  "version": "1.0.0",
+  "action": {
+    "default_icon": "img/hcmut_fact_check.png",
+    "default_title": "Click Me"
+  },
+  "icons": {
+    "48": "img/hcmut_fact_check.png"
+  },
+  "permissions": ["contextMenus", "activeTab", "storage"],
+
+  "background": {
+      "service_worker": "js/background.js"
+  }
+}

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { AIResponse } from "@/types/global";
 
 // const prisma = new PrismaClient();
 
@@ -22,46 +22,14 @@ export async function POST(request: Request) {
   console.log("Mockup Request Handling...");
   const final_label = Math.floor(Math.random() * 3);
   return new NextResponse(
-    JSON.stringify({
-        "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-        "final_label": final_label,
-        "evidences": [
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Vì người dân chưa mặn mà mua vé máy bay đi lại trong dịp Tết Nguyên đán nên các đại lý vé máy bay lớn cũng chưa dám gom vé Tết như mọi năm."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Những năm trước, năm nào gần Tết gia đình anh cũng đặt vé máy bay khứ hồi cho 4 người gồm 2 vợ chồng và 2 con để về quê vừa đón Tết, vừa thăm gia đình, đồng thời cũng là thời gian nghỉ dưỡng, tham quan một số địa điểm du lịch tại Quảng Ninh, Phú Thọ, Hà Nam, Ninh Bình…Chỉ tính riêng tiền vé may bay khứ hồi dành cho 4 người lớn cũng lên đến hơn 20 triệu đồng."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Ví dụ, hành trình khứ hồi TP.HCM - Hà Nội của Vietjet Air giá rẻ nhất đang ở mức 3,7 triệu đồng (đã bao gồm thuế phí)."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Tuy vậy, tránh tình trạng mua vé rồi lại hủy để mua vé rẻ hơn gần 50% như những năm trước, dẫn đến mất chi phí hủy chuyến lên đến 600.000 đồng."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Hành khách cũng đã quen với tâm lý mua vé máy bay Tết sát ngày, vì rút kinh nghiệm năm 2021, nhiều người hớ do đặt sớm vé máy bay Tết 2021."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Hành khách không nên đặt mua vé sớm, khi nào đi thì mua để có thể được hưởng chính sách ưu đãi, giảm giá."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Đây là một trong những nguyên nhân dẫn đến lượng vé bán ra của các đại lý, các hãng bay chưa được nhiều."
-          },
-          {
-            "claim": "Vé máy bay dịp Tết vẫn tăng phi mã, khiến giá khứ hồi bằng cả một tour trọn gói đi nước ngoài, đặt ra bài toán khó với ngành du lịch trong nước.",
-            "evidence": "Nhân viên của nhiều đại lý cho biết, tuy đã mở bán vé Tết phục vụ hành khách từ hơn 1 tháng nay nhưng số lượng vé bán ra rất thấp, chỉ đạt khoảng 30-35% so với cùng thời điểm những năm trước."
-          }
-        ],
-        "url": "https://hcmut.edu.vn/",
-        "provider": "HCMUT",
-        "groupId": 0
+    JSON.stringify(
+      {
+        "claim": "Tổng hợp tiền chất carbon và nitrogen nhằm tạo ra carbon nitride, hợp chất cứng hơn cubic boron nitride, hiện nay là vật liệu cứng thứ hai trên thế giới chỉ sau kim cương.",
+        "final_label": 1,
+        "evidence": "Ảnh: PA\nMột nhóm nhà khoa học quốc tế đứng đầu là các nhà nghiên cứu ở Trung tâm khoa học điều kiện cực hạn tại Đại học Edinburgh tạo ra đột phá mới khi tổng hợp tiền chất carbon và nitrogen nhằm tạo ra carbon nitride, hợp chất cứng hơn cubic boron nitride, hiện nay là vật liệu cứng thứ hai trên thế giới chỉ sau kim cương.\nKết quả phân tích hé lộ ba hợp chất carbon nitride tổng hợp có cấu trúc cần thiết đối với vật liệu siêu cứng.\nNgoài độ cứng, những hợp chất carbon nitride gần như không thể phá hủy này cũng có khả năng phát quang, áp điện và mật độ năng lượng cao, có thể lưu trữ lượng lớn năng lượng trong khối lượng nhỏ.\nDù giới khoa học nhận thấy tiềm năng của carbon nitride từ thập niên 1980, bao gồm khả năng chịu nhiệt cao, việc tạo ra chúng là một câu chuyện khác.\nNhóm nghiên cứu bao gồm nhiều chuyên gia vật liệu từ Đại học Bayreuth, Đức, và Đại học Linköping, Thụy Điển, đạt được thành tựu khi để các dạng khác nhau của tiền chất carbon nitrogen chịu áp suất 70 - 135 gigapascal (gấp khoảng một triệu lần áp suất khí quyển), đồng thời nung nóng chúng tới hơn 1.500 độ C. Sau đó, họ kiểm tra sắp xếp nguyên tử thông qua chùm tia X ở Cơ sở nghiên cứu Synchrotron châu Âu tại Pháp, Deutsches Elektronen - Synchrotron tại Đức và Advanced Photon Source tại Mỹ.",
+        "provider": "vnexpress.net",
+        "url": "https://vnexpress.net/vat-lieu-co-the-soan-ngoi-kim-cuong-ve-do-cung-4688566.html",
+        "groupId": 1
       })
   );
 }

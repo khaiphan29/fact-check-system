@@ -15,7 +15,7 @@ export const metadata = {
 
 const Register = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
+  // console.log(session);
   if (session) {
     redirect("/profile");
   }

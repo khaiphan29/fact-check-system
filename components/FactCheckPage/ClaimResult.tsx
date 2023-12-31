@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "@/styles/FactCheckPage/ClaimResult.module.css";
 import Tag from "../HomePage/Tag";
 import { TfiInfoAlt, TfiWrite } from "react-icons/tfi";
+import { ClaimResult } from "@/types/global";
 
 interface Props extends ClaimResult {
   setPopUpID: React.Dispatch<React.SetStateAction<number>>;
@@ -24,36 +25,15 @@ const Result = (props: Props) => {
       ? "bg-approved_2"
       : "bg-neutral_2";
 
-  const border =
-    props.rating === 0
-      ? "border-refuted_1"
-      : props.rating === 1
-      ? "border-approved_1"
-      : "border-neutral_1";
-
   return (
     <div
-      className="rounded-3xl transition-all duration-200 hover:scale-105"
+      className={"p-5 mb-5 bg-opacity-50 cursor-pointer rounded-3xl transition-all duration-200 ease-in-out hover:scale-105  " + bg_1}
       onClick={() => {
         props.setPopUpID(props.id);
       }}
     >
-      <div className={"py-4 rounded-3xl " + bg_2}>
-        <div className="w-max mx-auto">
-          <Tag rating={props.rating}></Tag>
-        </div>
-      </div>
-
-      <div>
-        <p
-          className={
-            "text-justify text-base border-2 border-t-0 border-solid rounded-b-3xl p-4 " +
-            border
-          }
-        >
-          {props.claim}
-        </p>
-      </div>
+      <p className="font-semibold text-xl line-clamp-5">{props.claim}</p>
+      <p>{props.evidence}</p>
     </div>
   );
 };

@@ -1,35 +1,41 @@
 import React from "react";
 import Image from "next/image";
-import approved from "@/public/assets/icons/tag_approved.svg";
-import refute from "@/public/assets/icons/tag_refute.svg";
-import neutral from "@/public/assets/icons/tag_neutral.svg";
-import styles from "@/styles/Tag.module.css";
+// import approved from "@/public/assets/icons/tag_approved.svg";
+// import refute from "@/public/assets/icons/tag_refute.svg";
+// import neutral from "@/public/assets/icons/tag_neutral.svg";
+import {
+  IoCheckmarkCircle,
+  IoCloseCircleSharp,
+  IoEllipsisVerticalCircleSharp,
+} from "react-icons/io5";
 
 const Tag = (props: { rating: number }) => {
-  const image: any =
-    props.rating === 1 ? approved : props.rating === 0 ? refute : neutral;
+  // const image: any =
+  //   props.rating === 1 ? approved : props.rating === 0 ? refute : neutral;
 
   const bg: string =
     props.rating === 1
-      ? styles.bg_tag_approved
+      ? "bg-approved_1"
       : props.rating === 0
-      ? styles.bg_tag_refute
-      : styles.bg_tag_neutral;
-
-  const cssProps: string[] = [
-    "text-refuted_2",
-    "text-approved_2",
-    "text-neutral_2",
-  ];
+      ? "bg-refuted_1"
+      : "bg-neutral_1";
 
   return (
-    <div className={`${styles.container} ${bg} gap-4`}>
-      <Image src={image.src} alt="tag" width={25} height={25}></Image>
-      <p
-        className={
-          "uppercase text-base font-semibold "
-        }
-      >
+    <div
+      className={`py-3 px-5 rounded-xl flex justify-center items-center ${bg} gap-4`}
+    >
+      {/* <Image src={image.src} alt="tag" width={25} height={25}></Image> */}
+      <div className="">
+        {props.rating === 1 ? (
+          <IoCheckmarkCircle size={30} />
+        ) : props.rating === 0 ? (
+          <IoCloseCircleSharp size={30} />
+        ) : (
+          <IoEllipsisVerticalCircleSharp size={30} className="rotate-90" />
+        )}
+      </div>
+
+      <p className={"uppercase text-base font-semibold "}>
         {props.rating === 1
           ? "Tin xác thực"
           : props.rating === 0

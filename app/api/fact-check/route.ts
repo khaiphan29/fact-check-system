@@ -1,51 +1,65 @@
 import { NextResponse } from "next/server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prismaClient";
 import { fetchModelResult } from "@/utils/aiUtils";
+import { notFoundResponse } from "@/utils/routeHandler";
+import {
+  AIResponse,
+  FactCheckRequest,
+  FactCheckResponse,
+} from "@/types/global";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 async function writeResult(
   userId: number,
   groupId: number,
   claim: string,
   labelTag: number,
-  evidenceLists: EvidenceResult[]
-) {
-  const evidenceData: { evidence_claim: string; evidence: string }[] =
-    evidenceLists.map(({ claim, evidence }) => ({
-      evidence_claim: claim,
-      evidence: evidence,
-    }));
+  evidence: string,
+  provider: string,
+  url: string
+): Promise<number> {
+  const evidenceData: {
+    content: string;
+    provider: string;
+    url: string;
+  } = {
+    content: evidence,
+    provider: provider,
+    url: url,
+  };
 
-  await prisma.claim.create({
+  const source = await prisma.evidence_source.findUnique({
+    where: {
+      name: provider,
+    },
+  });
+
+  if (!source) return -1;
+
+  const newClaim = await prisma.claim.create({
     data: {
       owner_id: userId,
       group_id: groupId,
       claim: claim,
       label_tag: labelTag,
       evidence: {
-        createMany: {
-          data: evidenceData,
+        create: {
+          content: evidence,
+          provider_id: source?.id,
+          url: url,
         },
       },
     },
   });
-}
-
-function notFoundResponse() {
-  return new Response(
-    JSON.stringify({
-      msg: "Không xác định người dùng hoặc nhóm tin",
-    }),
-    {
-      status: 404,
-    }
-  );
+  return newClaim.id;
 }
 
 export async function POST(request: Request) {
   // const data = await request.json();
   const data: FactCheckRequest = await request.json();
+
+  console.log(data);
 
   const groupQueryData = data.isQuick
     ? {
@@ -83,13 +97,17 @@ export async function POST(request: Request) {
   try {
     const aiData: AIResponse = await fetchModelResult(data.claim);
 
-    writeResult(
+    const claimID = await writeResult(
       user!.id,
       claimGroup!.id,
       data.claim,
       aiData.final_label,
-      aiData.evidences
+      aiData.evidence,
+      aiData.provider,
+      aiData.url
     );
+
+    if (claimID === -1) return notFoundResponse()
 
     await prisma.claim_group.update({
       where: {
@@ -102,11 +120,13 @@ export async function POST(request: Request) {
 
     const response: FactCheckResponse = {
       ...aiData,
+      claimId: claimID,
       claim: data.claim,
-      url: "https://hcmut.edu.vn/",
-      provider: "HCMUT",
       groupId: claimGroup!.id,
     };
+
+    console.log("FACT_CHECK RESULT:");
+    console.log(response);
 
     prisma.$disconnect();
     return new NextResponse(JSON.stringify({ ...response }));

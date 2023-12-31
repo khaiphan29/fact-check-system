@@ -1,17 +1,22 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "@/styles/FactCheckPage/ChatSection.module.css";
-import ClaimResult from "./ClaimResult";
+import SearchResult from "../HomePage/SearchResult";
 import SearchForm from "@/components/SearchForm";
 
 import { getGroupResult } from "@/utils/factCheck";
-import PopUpClaimResult from "../PopUpClaimResult";
 import { notFound } from "next/navigation";
+import { FactCheckResponse, GroupResultResponse } from "@/types/global";
+import ResultLoading from "../HomePage/ResultLoading";
 
 const ChatSection = (props: { groupId: number; email: string }) => {
-  const [claims, setClaims] = useState<React.JSX.Element[]>([]);
-  const [popUpID, setPopUpID] = useState<number>(-1);
+  const [claimComponents, setClaimComponents] = useState<React.JSX.Element[]>(
+    []
+  );
+  const bottomDiv = useRef<HTMLDivElement>(null);
+  const loadingDiv = useRef<HTMLDivElement>(null);
+  const [firstScroll, setFirstScroll] = useState<boolean>(false);
 
   async function fetchData() {
     try {
@@ -22,18 +27,20 @@ const ChatSection = (props: { groupId: number; email: string }) => {
 
       const data: GroupResultResponse = await response.json();
 
-      setClaims(
-        data.claimList.map((ele) => {
-          return (
-            <ClaimResult
-              id={ele.id}
-              claim={ele.claim}
-              rating={ele.rating}
-              setPopUpID={setPopUpID}
-            />
+      const tempClaimComponents: React.JSX.Element[] = [];
+      for (let i = 0; i < data.claimList.length; i++) {
+        const component =
+          i != data.claimList.length - 1 ? (
+            <SearchResult claimDisplay={data.claimList[i]} />
+          ) : (
+            <div>
+              <SearchResult claimDisplay={data.claimList[i]} />
+            </div>
           );
-        })
-      );
+        tempClaimComponents.push(component);
+      }
+
+      setClaimComponents(tempClaimComponents);
     } catch (e) {
       console.log(e);
     }
@@ -47,6 +54,7 @@ const ChatSection = (props: { groupId: number; email: string }) => {
   const [form, setForm] = React.useState({
     claim: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = e.target;
@@ -76,7 +84,18 @@ const ChatSection = (props: { groupId: number; email: string }) => {
         }
       );
       if (res.ok) {
-        fetchData();
+        const responseData: FactCheckResponse = await res.json();
+        setIsLoading(false);
+        setClaimComponents([
+          ...claimComponents,
+          <SearchResult
+            claimDisplay={{
+              ...responseData,
+              rating: responseData.final_label,
+              id: responseData.claimId,
+            }}
+          />,
+        ]);
       }
     } catch (e) {
       console.log("Claim submission error: ", e);
@@ -97,24 +116,43 @@ const ChatSection = (props: { groupId: number; email: string }) => {
     });
 
     fetchClaimData(form.claim);
+    setIsLoading(true);
+    setTimeout(() => {
+      loadingDiv.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    });
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("scroll bot layout");
+      bottomDiv.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }, 500);
+  }, [claimComponents.length]);
+
+  // useLayoutEffect(() => {
+  //   setTimeout(() => {
+  //     console.log("scroll bot layout");
+  //     bottomDiv.current?.scrollIntoView({
+  //       // behavior: "smooth",
+  //     });
+  //   }, 1000);
+  // }, []);
 
   return (
     <div className={styles.container}>
-      {/* Pop-up Result */}
-      {popUpID > 0 ? (
-        <PopUpClaimResult
-          claimId={popUpID}
-          email={props.email}
-          setPopUpID={setPopUpID}
-        />
-      ) : (
-        <div></div>
-      )}
-
-      <div className="p-10 overflow-scroll grid grid-cols-2 gap-10">
-        {claims}
-        <div className="h-[100px]"></div>
+      {/* ANCHOR CLAIM COMPONENTS */}
+      <div className="p-10 px-28 overflow-scroll gap-10">
+        {claimComponents}
+        {isLoading && (
+          <div ref={loadingDiv} className="mb-5">
+            <ResultLoading />
+          </div>
+        )}
+        <div ref={bottomDiv} className="h-[100px]"></div>
       </div>
       <div className={styles.input_container}>
         <div className={styles.input_wrapper}>

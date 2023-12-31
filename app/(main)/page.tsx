@@ -7,7 +7,6 @@ import BackgroundObject1 from "@/public/assets/images/homepage_object1.png";
 import BackgroundObject2 from "@/public/assets/images/homepage_object2.png";
 import SearchResult from "@/components/HomePage/SearchResult";
 import SearchForm from "@/components/SearchForm";
-import styles from "@/styles/Home.module.css";
 
 const Home = () => {
   const [isAlert, setAlert] = useState(false);
@@ -57,26 +56,26 @@ const Home = () => {
   }
 
   return (
-    <div className={styles.search_section}>
-      <div ref={searchContainer} className={styles.search_container}>
-        <div className={styles.search_bg_text}>
+    <div >
+      <div ref={searchContainer} className="relative h-[650px] flex justify-end bg-beige overflow-hidden rounded-3xl py-4 px-3">
+        <div className="absolute top-0 bottom-0 left-[35%] my-auto  mx-0 flex items-center text-white text-right tracking-[8px] text-[18rem] leading-[1] font-medium capitalize">
           <pre>{"Kiểm Tra\nMẫu Tin"}</pre>
         </div>
         <Image
           src={BackgroundObject1}
           alt="Background Object"
-          className={styles.search_bg_object1}
+          className="absolute top-0 right-[30%] w-[300px] h-auto object-cover"
         ></Image>
         <Image
           src={BackgroundObject2}
           alt="Background Object"
-          className={styles.search_bg_object2}
+          className="absolute top-[20%] -right-[5%] w-[800px] h-auto object-cover"
         ></Image>
-        <div className={styles.search_inner_section}>
-          <h1 className={styles.search_title}>
+        <div className="absolute bottom-[10%] left-[5%] w-[600px]">
+          <h1 className="mb-8 font-medium text-8xl">
             <pre>{"Kiểm Tra Mẫu Tin\nNhanh Chóng"}</pre>
           </h1>
-          <div className={styles.search_desc}>
+          <div className="text-lg leading-[1.5] mb-8">
             Gửi một mẫu tin ngắn tại để kiểm tra tính xác thực tại đây. Hệ thống
             hoạt động tốt với một mẫu tin và nội dung không mang tính cá nhân.
           </div>
@@ -86,17 +85,17 @@ const Home = () => {
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             form={form}
-            className={styles.search_wrapper}
+            className="mt-3 mb-7"
             darkMode={true}
           />
 
           {isAlert && (
-            <div className={styles.alert}>Nhận định không thể trống</div>
+            <div className="text-red_alert">Nhận định không thể trống</div>
           )}
         </div>
       </div>
 
-      {claim && <SearchResult claim={claim} />}
+      {claim && <SearchResult claim={claim} setClaim={setClaim} />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import prisma from "@/utils/prismaClient";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
   const data: { username: string; email: string; password: string } =

@@ -9,6 +9,9 @@ import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import styles from "@/styles/Auth.module.css";
 
+import { getRole } from "@/utils/auth";
+import { GetRoleResponse } from "@/types/global";
+
 export const metadata = {
   title: "Đăng nhập",
   description: "Login to BK Fact Check system",
@@ -16,10 +19,18 @@ export const metadata = {
 
 const Login = async () => {
   const session = await getServerSession(authOptions);
-  
+
   if (session) {
+    const response = await getRole({
+      email: session!.user!.email!,
+    });
+    if (response.ok) {
+      const data: GetRoleResponse = await response.json();
+      if (data.role !== "user") redirect("/admin");
+    }
     redirect("/profile");
   }
+ 
   return (
     <main className={styles.right_container}>
       <div className={styles.right_nav}>
@@ -34,19 +45,3 @@ const Login = async () => {
 };
 
 export default Login;
-// export async function getServerSideProps({ req }: GetSessionParams){
-//   const session = await getSession({ req })
-
-//   if(session){
-//     return {
-//       redirect : {
-//         destination: '/',
-//         permanent: false
-//       }
-//     }
-//   }
-
-//   return {
-//     props: { session }
-//   }
-// }
