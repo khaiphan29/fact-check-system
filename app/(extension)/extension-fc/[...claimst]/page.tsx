@@ -1,8 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/public/assets/images/logo.png";
-import React, { useRef, useState, useEffect } from "react";
-import News from "@/components/HomePage/News";
+import React from "react";
 import SearchResult from "@/components/HomePage/SearchResult";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
