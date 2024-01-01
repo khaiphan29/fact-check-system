@@ -329,7 +329,7 @@ const SearchResult = (props: Props) => {
               <div className="mt-6 flex flex-col gap-3 ">
                 {result.evidence.map(
                   (ele) =>
-                    !ele.toLowerCase().includes("ảnh:") && (
+                    !ele.toLowerCase().includes("ảnh") && (
                       <p className="leading-7 first-letter:capitalize">{ele}</p>
                     )
                 )}

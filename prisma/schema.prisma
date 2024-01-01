@@ -59,12 +59,12 @@ model claim {
 
 model claim_group {
   id            Int      @id @default(autoincrement())
-  owner_id      Int
+  owner_id      Int      @default(0)
   name          String   @db.VarChar(100)
   created_date  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamp(6)
   modified_date DateTime @default(dbgenerated("CURRENT_TIMESTAMP(6)")) @db.Timestamp(6)
   claim         claim[]
-  user          user     @relation(fields: [owner_id], references: [id], onUpdate: NoAction)
+  user          user     @relation(fields: [owner_id], references: [id], onUpdate: NoAction, onDelete: SetDefault)
 }
 
 model feedback {

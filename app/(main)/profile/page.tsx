@@ -2,7 +2,8 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import styles from './Profile.module.css'
+import styles from "./Profile.module.css";
+import AccountModForm from "@/components/AccountModForm";
 
 const Profile = async () => {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,7 @@ const Profile = async () => {
   return (
     <main className={styles.main}>
       <h1 className={styles.username}>{session.user?.email}</h1>
-      {/* {JSON.stringify(session)} */}
+      <AccountModForm email={session.user?.email!} isUser={true} />
     </main>
   );
 };

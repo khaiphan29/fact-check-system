@@ -7,10 +7,11 @@ import styles from "@/styles/Auth.module.css";
 import LeftContainer from "./components/LeftContainer";
 import { TfiHome } from "react-icons/tfi";
 
-// export const metadata = {
-//   title: "BK Fact Check",
-//   description: "Check Fact for a piece of news",
-// };
+export const metadata = {
+  icons: {
+    icon: "/icon.ico", // /public path
+  },
+};
 
 const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   return (

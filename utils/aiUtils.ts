@@ -5,7 +5,7 @@ const realURL: string = process.env.AI_URL!;
 
 export async function fetchModelResult(claim: string): Promise<AIResponse> {
   try {
-    const res: Response = await fetch(mockupURL, {
+    const res: Response = await fetch(realURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

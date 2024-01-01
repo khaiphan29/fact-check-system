@@ -72,12 +72,23 @@ interface RegisterFormData {
   username: string;
   password: string;
   cpassword: string;
+  role_id?: string;
+}
+
+interface AccountFormData {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  role_id: string;
+  phone: string;
 }
 
 interface RegisterRequest {
   email: string;
   username: string;
   password: string;
+  role_id?: string;
 }
 
 interface RegisterResponse {
@@ -215,6 +226,23 @@ interface ClaimResult {
   evidence: string;
   provider: string;
   url: string;
+}
+
+interface ScrapingStatusResponse {
+  list: {
+    id: number;
+    name: string;
+    scraping_url: string;
+    status: boolean;
+  }[];
+}
+
+interface ExternalScrapingRequest {
+  data: {
+    id: number;
+    name: string;
+    scraping_url: string;
+  }[];
 }
 
 import { PrismaClient } from "@prisma/client";

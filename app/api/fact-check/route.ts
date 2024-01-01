@@ -59,7 +59,7 @@ export async function POST(request: Request) {
   // const data = await request.json();
   const data: FactCheckRequest = await request.json();
 
-  console.log(data);
+// console.log(data);
 
   const groupQueryData = data.isQuick
     ? {
@@ -125,8 +125,8 @@ export async function POST(request: Request) {
       groupId: claimGroup!.id,
     };
 
-    console.log("FACT_CHECK RESULT:");
-    console.log(response);
+    // console.log("FACT_CHECK RESULT:");
+    // console.log(response);
 
     prisma.$disconnect();
     return new NextResponse(JSON.stringify({ ...response }));

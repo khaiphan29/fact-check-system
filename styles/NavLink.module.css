@@ -1,10 +1,6 @@
 .container {
-  @apply transition-all duration-200 ease-in-out text-sm font-light;
+  @apply transition-all duration-200 ease-in-out text-sm font-light cursor-pointer;
   color: var(--nav-inactive);
-
-  /* font-size: 14px;
-  font-weight: 300; */
-  /* transition: 0.2s; */
 }
 
 .container:hover {

@@ -52,7 +52,7 @@ const FeedbackTable = (props: Props) => {
     []
   );
 
-  // const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
+ const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
 
   const table = useMaterialReactTable({
     columns,

@@ -7,6 +7,9 @@ import { Providers } from "../providers";
 export const metadata = {
   title: "BK Fact Check",
   description: "Check Fact for a piece of news",
+  icons: {
+    icon: '/icon.ico', // /public path
+    },
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

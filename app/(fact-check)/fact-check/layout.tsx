@@ -12,6 +12,9 @@ import { redirect } from "next/navigation";
 export const metadata = {
   title: "Kiểm Tin",
   description: "Check Fact for a piece of news",
+  icons: {
+    icon: '/icon.ico', // /public path
+    },
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {

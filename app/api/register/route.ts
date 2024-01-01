@@ -1,9 +1,10 @@
+import { RegisterRequest } from "@/types/global";
 import prisma from "@/utils/prismaClient";
 
 // const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
-  const data: { username: string; email: string; password: string } =
+  const data: RegisterRequest =
     await request.json();
 
   console.log("Creating new user ...");
@@ -33,7 +34,7 @@ export async function POST(request: Request) {
       email: data.email,
       password: data.password,
       name: data.email,
-      role_id: 1,
+      role_id: data.role_id ? Number(data.role_id) : 1,
     },
   });
 

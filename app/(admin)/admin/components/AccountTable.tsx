@@ -7,6 +7,7 @@ import {
   type MRT_ColumnDef,
   type MRT_RowSelectionState,
 } from "material-react-table";
+import PopUpAccountMod from "./PopUpAccounMod";
 
 //AccountMgmt data type
 type Account = {
@@ -23,6 +24,9 @@ type Props = {
 
 const AccountTable = (props: Props) => {
   const data: Account[] = props.accounts;
+  const [isModifying, setIsModifying] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>();
+
   //should be memoized or stable
   const columns = useMemo<MRT_ColumnDef<Account>[]>(
     () => [
@@ -55,18 +59,32 @@ const AccountTable = (props: Props) => {
     []
   );
 
-  // const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
+  const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
 
   const table = useMaterialReactTable({
     columns,
     data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     muiPaginationProps: {
-      rowsPerPageOptions: props.accounts.length < 50 ? [props.accounts.length] : [50, 100, 200],
+      rowsPerPageOptions:
+        props.accounts.length < 50 ? [props.accounts.length] : [50, 100, 200],
       showFirstButton: true,
       showLastButton: true,
     },
-    enableRowSelection: true,
-    enableMultiRowSelection: false,
+    getRowId: (row) => row.email,
+    muiTableBodyRowProps: ({ row }) => ({
+      //implement row selection click events manually
+      onClick: () => {
+        setIsModifying(true);
+        setEmail(row.id);
+      },
+      sx: {
+        cursor: "pointer",
+      },
+    }),
+    onRowSelectionChange: setRowSelection,
+    state: { rowSelection },
+    // enableRowSelection: true,
+    // enableMultiRowSelection: false,
   });
 
   useEffect(() => {
@@ -77,6 +95,9 @@ const AccountTable = (props: Props) => {
 
   return (
     <div>
+      {isModifying && (
+        <PopUpAccountMod email={email!} setCloseFunction={setIsModifying} />
+      )}
       <MaterialReactTable table={table} />
     </div>
   );

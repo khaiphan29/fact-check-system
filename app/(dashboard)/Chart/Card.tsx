@@ -1,6 +1,7 @@
 'use client'
 
-import styles from "./Card.module.css"
+import styles from "./DashboardStyle/Card.module.css"
+
 const Card = ({data, label, icon}) => {
     return (
       <div className={styles.container}>

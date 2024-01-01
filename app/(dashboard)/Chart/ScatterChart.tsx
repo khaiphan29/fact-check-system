@@ -1,6 +1,6 @@
 'use client'
 import { TimeScale } from 'chart.js';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -13,198 +13,333 @@ import {
 import Chart from 'chart.js/auto';
 import { Scatter } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
+import stylesChart from "./DashboardStyle/Card.module.css"
+import { getFactCheckStatistics, getUsageStatistics } from '../dashboardUtils';
+import { FactCheckStatisticResponse, UsageStatisticResponse } from "@/types/global";
+Chart.register(TimeScale, CategoryScale);
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-Chart.register(TimeScale, CategoryScale);
+interface SelectedYear {
+  value: number;
+  label: string;
+}
 
-const MyScatterPlot = () => {
+interface SelectedMonth {
+  value2: number;
+  label2: string;
+}
 
-  function getSecond(x: Date){
-    return x.getHours() * 3600 + x.getMinutes() * 60 + x.getSeconds()
+const MyScatterPlot = ({ selectedYear, selectedMonth }: { selectedYear: SelectedYear, selectedMonth: SelectedMonth }) => {
+  const { value } = selectedYear;
+  const { value2 } = selectedMonth;
+
+  // const [factCheckData, setFactCheckStat] = useState<FactCheckStatisticResponse>();
+  const [usageData, setUsageStat] = useState<UsageStatisticResponse>();
+
+  async function getInitialStat() {
+    // setFactCheckStat(await getFactCheckStatistics());
+    setUsageStat(await getUsageStatistics());
   }
-  function getDays(x: Date){
-    var startOfYear = new Date(x.getFullYear(), 0, 0, 0);
-    var diff = x - startOfYear;
-    var oneDay = 1000 * 60 * 60 * 24;
-    var day = Math.floor(diff / oneDay);
-    return day;
-  }
-  function getXHours(x){
-    return Math.floor(x/3600);
-  }
-  const data = {
-    datasets: [
-      {
-        label: 'Y tế',
-        data: [
-          { x: getSecond(new Date('2023-01-01T01:00:00')), y: getDays(new Date('2023-01-01T01:00:00')) },
-          { x: getSecond(new Date('2023-01-01T04:00:11')), y: getDays(new Date('2023-01-01T04:00:11')) },
-          { x: getSecond(new Date('2023-02-01T07:00:12')), y: getDays(new Date('2023-02-01T07:00:12')) },
-          { x: getSecond(new Date('2023-02-01T10:00:13')), y: getDays(new Date('2023-02-01T10:00:13')) },
-          { x: getSecond(new Date('2023-03-01T13:00:14')), y: getDays(new Date('2023-03-01T13:00:14')) },
-          { x: getSecond(new Date('2023-03-01T16:00:15')), y: getDays(new Date('2023-03-01T16:00:15')) },
-          { x: getSecond(new Date('2023-04-01T19:00:16')), y: getDays(new Date('2023-04-01T19:00:16')) },
-          { x: getSecond(new Date('2023-04-01T22:00:17')), y: getDays(new Date('2023-04-01T22:00:17')) },
-          { x: getSecond(new Date('2023-05-02T00:00:00')), y: getDays(new Date('2023-05-02T00:00:00')) },
-          { x: getSecond(new Date('2023-05-02T01:00:00')), y: getDays(new Date('2023-05-02T01:00:00')) },
-          { x: getSecond(new Date('2023-06-02T04:00:11')), y: getDays(new Date('2023-06-02T04:00:11')) },
-          { x: getSecond(new Date('2023-06-02T07:00:12')), y: getDays(new Date('2023-06-02T07:00:12')) },
-          { x: getSecond(new Date('2023-07-02T10:00:13')), y: getDays(new Date('2023-07-02T10:00:13')) },
-          { x: getSecond(new Date('2023-07-02T13:00:14')), y: getDays(new Date('2023-07-02T13:00:14')) },
-          { x: getSecond(new Date('2023-08-02T16:00:15')), y: getDays(new Date('2023-08-02T16:00:15')) },
-          { x: getSecond(new Date('2023-08-02T19:00:16')), y: getDays(new Date('2023-08-02T19:00:16')) },
-          { x: getSecond(new Date('2023-09-02T22:00:17')), y: getDays(new Date('2023-09-02T22:00:17')) },
-          { x: getSecond(new Date('2023-10-03T00:00:00')), y: getDays(new Date('2023-10-03T00:00:00')) },
-          { x: getSecond(new Date('2023-11-02T22:00:17')), y: getDays(new Date('2023-11-02T22:00:17')) },
-          { x: getSecond(new Date('2023-12-03T23:00:00')), y: getDays(new Date('2023-12-03T23:00:00')) },
-          // more data...
-        ],
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.6)',
-      },
-      {
-        label: 'Thực phẩm',
-        data: [
-          { x: getSecond(new Date('2023-01-01T00:20:01')), y: getDays(new Date('2023-01-01T00:20:01')) },
-          { x: getSecond(new Date('2023-02-15T02:20:02')), y: getDays(new Date('2023-02-15T02:20:02')) },
-          { x: getSecond(new Date('2023-01-01T03:20:01')), y: getDays(new Date('2023-01-01T03:20:01')) },
-          { x: getSecond(new Date('2023-04-15T08:20:02')), y: getDays(new Date('2023-04-15T08:20:02')) },
-          { x: getSecond(new Date('2023-05-01T05:20:01')), y: getDays(new Date('2023-05-01T05:20:01')) },
-          { x: getSecond(new Date('2023-07-15T04:20:02')), y: getDays(new Date('2023-07-15T04:20:02')) },
-          { x: getSecond(new Date('2023-08-01T07:20:01')), y: getDays(new Date('2023-08-01T07:20:01')) },
-          { x: getSecond(new Date('2023-08-15T10:20:02')), y: getDays(new Date('2023-08-15T10:20:02')) },
-          { x: getSecond(new Date('2023-09-06T00:20:01')), y: getDays(new Date('2023-09-06T00:20:01')) },
-          { x: getSecond(new Date('2023-09-13T07:20:02')), y: getDays(new Date('2023-09-13T07:20:02')) },
-          { x: getSecond(new Date('2023-09-01T03:20:01')), y: getDays(new Date('2023-09-01T03:20:01')) },
-          { x: getSecond(new Date('2023-09-15T08:20:02')), y: getDays(new Date('2023-09-15T08:20:02')) },
-          { x: getSecond(new Date('2023-10-11T05:20:01')), y: getDays(new Date('2023-10-11T05:20:01')) },
-          { x: getSecond(new Date('2023-11-23T04:20:02')), y: getDays(new Date('2023-11-23T04:20:02')) },
-          { x: getSecond(new Date('2023-11-24T07:20:01')), y: getDays(new Date('2023-11-24T07:20:01')) },
-          { x: getSecond(new Date('2023-12-15T10:20:02')), y: getDays(new Date('2023-12-15T10:20:02')) },
-          // more data...
-        ],
-        borderColor: 'rgb(53, 162, 235)',
-        backgroundColor: 'rgba(53, 162, 235, 0.6)',
-      },
-      {
-        label: 'Xã hội',
-        data: [
-          { x: getSecond(new Date('2023-01-01T03:00:00')), y: getDays(new Date('2023-01-01T03:00:00')) },
-          { x: getSecond(new Date('2023-01-04T05:00:11')), y: getDays(new Date('2023-01-04T05:00:11')) },
-          { x: getSecond(new Date('2023-01-03T07:00:12')), y: getDays(new Date('2023-01-03T07:00:12')) },
-          { x: getSecond(new Date('2023-01-04T10:00:13')), y: getDays(new Date('2023-01-04T10:00:13')) },
-          { x: getSecond(new Date('2023-01-05T13:00:14')), y: getDays(new Date('2023-01-05T13:00:14')) },
-          { x: getSecond(new Date('2023-01-06T16:00:15')), y: getDays(new Date('2023-01-06T16:00:15')) },
-          { x: getSecond(new Date('2023-01-10T19:00:16')), y: getDays(new Date('2023-01-10T19:00:16')) },
-          { x: getSecond(new Date('2023-04-01T22:00:17')), y: getDays(new Date('2023-04-01T22:00:17')) },
-          { x: getSecond(new Date('2023-05-06T09:00:00')), y: getDays(new Date('2023-05-06T09:00:00')) },
-          { x: getSecond(new Date('2023-05-06T09:00:00')), y: getDays(new Date('2023-05-06T09:00:00')) },
-          { x: getSecond(new Date('2023-06-06T09:00:11')), y: getDays(new Date('2023-06-06T09:00:11')) },
-          { x: getSecond(new Date('2023-06-02T09:00:12')), y: getDays(new Date('2023-06-02T09:00:12')) },
-          { x: getSecond(new Date('2023-07-02T10:00:13')), y: getDays(new Date('2023-07-02T10:00:13')) },
-          { x: getSecond(new Date('2023-07-02T13:00:14')), y: getDays(new Date('2023-07-02T13:00:14')) },
-          { x: getSecond(new Date('2023-08-02T14:00:15')), y: getDays(new Date('2023-08-02T14:00:15')) },
-          { x: getSecond(new Date('2023-08-02T14:00:16')), y: getDays(new Date('2023-08-02T14:00:16')) },
-          { x: getSecond(new Date('2023-09-02T21:00:17')), y: getDays(new Date('2023-09-02T21:00:17')) },
-          { x: getSecond(new Date('2023-11-03T07:00:00')), y: getDays(new Date('2023-11-03T07:00:00')) },
-          { x: getSecond(new Date('2023-11-02T07:00:17')), y: getDays(new Date('2023-11-02T07:00:17')) },
-          { x: getSecond(new Date('2023-12-03T07:00:00')), y: getDays(new Date('2023-12-03T07:00:00')) },
-          // more data...
-        ],
-        borderColor: 'rgb(235, 162, 53)',
-        backgroundColor: 'rgba(235, 162, 53, 0.6)',
-      },
-    ],
-  };
-  
-  const options = {
-    responsive: true,
-    plugins: {
-      title: {
-        display: false,
-        text: 'Scatter Plot - Times users check for fake news',
-      },
-    },
-    scales: {
-        x: {
-          max: 86400,
-          min: 0,
-          ticks: {
-            callback: function(val, index) {
-              return '' + getXHours(val) + 'h';
-            },
-            stepSize: 3600,
-            maxTicksLimit: 25,
-            },
-            title: {
-              color: 'red',
-              display: true,
-              text: 'Hour'
-            }
-          },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          padding: 10,
-          max: 365,
-          min: 0,
-          callback: function(val, index) {
-            if (val >= 0 && val < 30 || val >= 360 && val < 365){
-              return "January"
-            }
-            else if(val >= 30 && val < 59){
-              return "February"
-            }
-            else if(val >= 59 && val < 90){
-              return "March"
-            }
-            else if(val >= 90 && val < 120){
-              return "April"
-            }
-            else if(val >= 120 && val < 150){
-              return "May"
-            }
-            else if(val >= 150 && val < 180){
-              return "June"
-            }
-            else if(val >= 180 && val < 210){
-              return "July"
-            }
-            else if(val >= 210 && val < 240){
-              return "August"
-            }
-            else if(val >= 240 && val < 270){
-              return "September"
-            }
-            else if(val >= 270 && val < 300){
-              return "October"
-            }
-            else if(val >= 300 && val < 330){
-              return "November"
-            }
-            else if(val >= 330 && val < 360){
-              return "December"
-            }
-            else 
-              return ''
-          },
-          stepSize: 30,
-          maxTicksLimit: 13,
-        },
-        title: {
-          color: 'red',
-          display: true,
-          text: 'Month'
+
+  useEffect(() => {
+    getInitialStat();
+  }, []);
+
+  // console.log("UsageData: ", usageData)
+  // console.log("UsageData month day hour: ", usageData?.by_month[0].by_day[0].by_hour[0].hour)
+
+  // Function to fill missing data in the usageData
+
+const fillMissingData = (usageData) => {
+
+  const filledData = usageData?.by_month ? [...usageData.by_month] : [];
+
+  // Iterate over each month
+  filledData.forEach((monthData) => {
+    const { month, by_day } = monthData;
+
+    const lastDay = new Date(usageData.year, month, 0).getDate();
+    // Fill missing days
+    for (let day = 1; day <= lastDay; day++) {
+      const existingDay = by_day.find((dayData) => dayData.day === day);
+
+      if (!existingDay) {
+        // Day is missing, add a new entry with empty by_hour array
+        monthData.by_day.push({ day, by_hour: [] });
+      }
+    }
+
+    // Iterate over each day
+    monthData.by_day.forEach((dayData) => {
+      const { day, by_hour } = dayData;
+
+      // Fill missing hours
+      for (let hour = 0; hour < 24; hour++) {
+        const existingHour = by_hour.find((hourData) => hourData.hour === hour);
+
+        if (!existingHour) {
+          // Hour is missing, add a new entry with count 0
+          dayData.by_hour.push({ hour, count: 0 });
+          monthData.by_hour.push({ hour, count: 0 });
         }
+      }
+    });
+  });
+
+  return { year: usageData?.year, by_month: filledData };
+};
+
+const filledUsageData = fillMissingData(usageData);
+// console.log('Filled Usage Data:', filledUsageData);
+
+
+  function GetDataByYear(year: number) {
+    let filteredData = {
+      datasets: [
+        {
+          label: '0',
+          data: [],
+          borderColor: 'rgb(100, 100, 100)',
+          backgroundColor: 'rgba(100, 100, 100, 0.6)',
+        },
+        {
+          label: '1-15',
+          data: [],
+          borderColor: 'rgb(255, 255, 100)',
+          backgroundColor: 'rgba(255, 255, 100, 0.6)',
+        },
+        {
+          label: '15-30',
+          data: [],
+          borderColor: 'rgb(244, 128, 0)',
+          backgroundColor: 'rgba(244, 128, 0, 0.6)',
+        },
+        {
+          label: '> 30',
+          data: [],
+          borderColor: 'rgb(255, 10, 10)',
+          backgroundColor: 'rgba(255, 10, 10, 0.6)',
+        },
+      ],
+    };
+    if (!filledUsageData || !filledUsageData.by_month || filledUsageData.year != year) {
+      return filteredData;
+    }
+
+    const aggregatedData = {};
+
+    for (let monthIndex = 0; monthIndex < filledUsageData.by_month.length; monthIndex++) {
+      const monthData = filledUsageData.by_month[monthIndex];
+      
+      for (let hourIndex = 0; hourIndex < monthData.by_hour.length; hourIndex++) {
+        const hourData = monthData.by_hour[hourIndex];
+        const key = `${monthIndex + 1}-${hourData.hour}`;
+        if (!aggregatedData[key]) {
+          aggregatedData[key] = hourData.count;
+        } else {
+          aggregatedData[key] += hourData.count;
+        }
+        // console.log("Key: ", key, "count ", aggregatedData[key])
+      }
+    }
+  
+    for (const key in aggregatedData) {
+      const [month, hour] = key.split('-');
+      const dataPoint = { x: parseInt(month), y: parseInt(hour) };
+      // console.log("Count ",month," month", hour, "Hour Count: ", aggregatedData[key] )
+      if (aggregatedData[key] === 0) {
+        filteredData.datasets[0].data.push(dataPoint);
+      } else if (aggregatedData[key] <= 15) {
+        filteredData.datasets[1].data.push(dataPoint);
+      } else if (aggregatedData[key] <= 30) {
+        filteredData.datasets[2].data.push(dataPoint);
+      } else {
+        filteredData.datasets[3].data.push(dataPoint);
+      }
+    }
+  
+    return filteredData;
+  }
+
+  function GetDataByMonth(year: number, month: number) {
+    let filteredData = {
+      datasets: [
+        {
+          label: '0',
+          data: [],
+          borderColor: 'rgb(100, 100, 100)',
+          backgroundColor: 'rgba(100, 100, 100, 0.6)',
+        },
+        {
+          label: '1-3',
+          data: [],
+          borderColor: 'rgb(255, 255, 100)',
+          backgroundColor: 'rgba(255, 255, 100, 0.6)',
+        },
+        {
+          label: '3-7',
+          data: [],
+          borderColor: 'rgb(244, 128, 0)',
+          backgroundColor: 'rgba(244, 128, 0, 0.6)',
+        },
+        {
+          label: '> 7',
+          data: [],
+          borderColor: 'rgb(255, 10, 10)',
+          backgroundColor: 'rgba(255, 10, 10, 0.6)',
+        },
+      ],
+    };
+
+    if (!filledUsageData || !filledUsageData.by_month || filledUsageData.year != year || !filledUsageData.by_month[month - 1] || !filledUsageData.by_month[month - 1].by_day) {
+      return filteredData;
+    }
+
+    const aggregatedData = {};
+    
+      for (let dayIndex = 0; dayIndex < filledUsageData.by_month[month-1].by_day.length; dayIndex++) {
+        const dayData = filledUsageData.by_month[month-1].by_day[dayIndex];
+        
+        for (let hourIndex = 0; hourIndex < dayData.by_hour.length; hourIndex++) {
+          const hourData = dayData.by_hour[hourIndex];
+          const key = `${dayData.day}-${hourData.hour}`;
+          if (!aggregatedData[key]) {
+            aggregatedData[key] = hourData.count;
+          } else {
+            aggregatedData[key] += hourData.count;
+          }
+          // console.log("Key: ", key, "count ", aggregatedData[key])
+        }
+      }
+    
+      for (const key in aggregatedData) {
+        const [day, hour] = key.split('-');
+        const dataPoint = { x: parseInt(day), y: parseInt(hour) };
+        // console.log("Count ",month," month", hour, "Hour Count: ", aggregatedData[key] )
+        if (aggregatedData[key] === 0) {
+          filteredData.datasets[0].data.push(dataPoint);
+        } else if (aggregatedData[key] <= 3) {
+          filteredData.datasets[1].data.push(dataPoint);
+        } else if (aggregatedData[key] <= 7) {
+          filteredData.datasets[2].data.push(dataPoint);
+        } else {
+          filteredData.datasets[3].data.push(dataPoint);
+        }
+      }
+  
+    return filteredData;
+  }
+  
+  let options;
+  let fulldata; // = GetDataByMonth(value, value2);
+  let title;
+
+  if(value == filledUsageData?.year && value2 == 13){
+    fulldata = GetDataByYear(value);
+
+    title = "Lượng Kiểm Tin Mỗi Thời Điểm Mỗi Tháng"
+
+    options = {
+      responsive: true,
+      plugins: {
+        title: {
+          display: false,
+          text: 'Scatter Plot - Lượng người dùng kiểm tin giả mỗi giờ',
+        },
       },
-    },
-  };
+      scales: {
+          y: {
+            ticks: {
+              callback: function(val, index) {
+                if(val == 24)
+                  return ''
+                return '' + val + 'h';
+              },
+              maxTicksLimit: 24,
+              },
+              title: {
+                color: 'red',
+                display: true,
+                text: 'Giờ'
+              }
+            },
+        x: {
+          ticks: {
+            padding: 10,
+            callback: function(val, index) {
+                if(val == 0)
+                  return ''
+                return "Tháng " + val
+            },
+            maxTicksLimit: 13,
+          },
+          title: {
+            color: 'red',
+            display: true,
+            text: 'Tháng'
+          }
+        },
+      },
+    };
+  }
+  else{
+    
+    fulldata = GetDataByMonth(value, value2);
+
+    title = "Lượng Kiểm Tin Mỗi Thời Điểm Trong Ngày Mỗi Tháng"
+
+    options = {
+      responsive: true,
+      plugins: {
+        title: {
+          display: false,
+          text: 'Scatter Plot - Lượng người dùng kiểm tin giả mỗi giờ',
+        },
+      },
+      scales: {
+          y: {
+            ticks: {
+              callback: function(val, index) {
+                if(val == 24)
+                  return ''
+                return '' + val + 'h';
+              },
+              maxTicksLimit: 24,
+              },
+              title: {
+                color: 'red',
+                display: true,
+                text: 'Giờ'
+              }
+            },
+        x: {
+          beginAtZero: false,
+          ticks: {
+            padding: 10,
+            callback: function(val, index) {
+                if(val == 0)
+                  return ''
+                return val
+            },
+            maxTicksLimit: 24,
+          },
+          title: {
+            color: 'red',
+            display: true,
+            text: 'Ngày'
+          }
+        },
+      },
+    };
+  }
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7 pb-7 shadow sm:px-7.5 xl:col-span-6">
+    <div className="col-span-12 rounded-sm bg-white sm:px-7.5 xl:col-span-6">
+    <div className={stylesChart.containerChart}>
     <div className="flex w-full flex-col flex-wrap items-start justify-between gap-3 sm:flex-nowrap">
-      <p className="font-bold text-primary">Times User Check For Fake News</p>
-            <Scatter data={data} options={options} />
+      <p className="font-bold text-primary">{title}</p>
+            <Scatter data={fulldata} options={options} />
+    </div>
     </div>
   </div>);
 }

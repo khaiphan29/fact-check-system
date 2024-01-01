@@ -15,7 +15,9 @@ import AdminNav from "./AdminNav";
 
 export const metadata = {
   title: "Trang Admin",
-  description: "",
+  icons: {
+    icon: '/icon.ico', // /public path
+    },
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -28,9 +30,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     });
     if (response.ok) {
       const data: GetRoleResponse = await response.json();
-      if (data.role === "user") redirect("/profile");
+      if (data.role !== "admin") redirect("/fact-check");
     } else {
-      redirect("/profile");
+      redirect("/fact-check");
     }
   }
 

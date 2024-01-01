@@ -1,4 +1,5 @@
 import {
+  AccountFormData,
   AccountListRequest,
   GetRoleRequest,
   RegisterRequest,
@@ -38,6 +39,40 @@ export const getAccountList = async (
   values: AccountListRequest
 ): Promise<Response> => {
   const res = await fetch("/api/get-account-list", {
+    method: "POST",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
+
+  return res;
+};
+
+export const getAccount = async (values: {
+  email: string;
+}): Promise<Response> => {
+  // console.log(`Fetching... /api/register`);
+
+  const res = await fetch(`/api/get-account`, {
+    method: "POST",
+    cache: "no-cache",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
+
+  return res;
+};
+
+export const updateAccount = async (
+  values: AccountFormData
+): Promise<Response> => {
+  // console.log(`Fetching... /api/register`);
+
+  const res = await fetch(`/api/update-account`, {
     method: "POST",
     cache: "no-cache",
     headers: {

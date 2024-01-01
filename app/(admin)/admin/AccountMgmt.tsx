@@ -1,16 +1,9 @@
 import { useMemo, useState, useEffect } from "react";
-import { getServerSession } from "next-auth";
-
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  type MRT_ColumnDef,
-  type MRT_RowSelectionState,
-} from "material-react-table";
 import AccountTable from "./components/AccountTable";
 
 import { AccountListResponse } from "@/types/global";
 import { getAccountList } from "@/utils/auth";
+import PopUpRegister from "./components/PopUpRegisterForm";
 
 //AccountMgmt data type
 type Account = {
@@ -27,6 +20,7 @@ interface Props {
 
 const AccountMgmt = (props: Props) => {
   const [accountList, setAccountList] = useState<Account[]>([]);
+  const [isRegister, setIsRegister] = useState<boolean>(false);
 
   async function fetchAccountData() {
     const res: Response = await getAccountList({
@@ -44,29 +38,15 @@ const AccountMgmt = (props: Props) => {
 
   return (
     <div>
-      <div className="px-4 flex justify-between">
-        <div className="flex gap-4">
-          {/* <div
-            className={
-              multiSelection
-                ? "p-4 py-3 border rounded-xl cursor-pointer bg-black text-white"
-                : "p-4 py-3 border rounded-xl cursor-pointer hover:bg-black hover:text-white transition-all duration-200"
-            }
-            onClick={() => {
-              selectMultiSelection(!multiSelection);
-            }}
-          >
-            Chọn Nhiều Tài Khoản
-          </div> */}
-          <div className="p-4 py-3 border rounded-xl cursor-pointer hover:bg-black hover:text-white transition-all duration-200">
-            Sửa Thông Tin
-          </div>
-          <div className="p-4 py-3 border rounded-xl cursor-pointer hover:bg-black hover:text-white transition-all duration-200">
-            Xoá Tài Khoản
-          </div>
-        </div>
+      {isRegister && <PopUpRegister setCloseFunction={setIsRegister} />}
 
-        <div className="p-4 py-3 border rounded-xl cursor-pointer hover:bg-black hover:text-white transition-all duration-200">
+      <div className="px-4 flex justify-between">
+        <div
+          className="ml-auto p-4 py-3 border rounded-xl cursor-pointer hover:bg-black hover:text-white transition-all duration-200"
+          onClick={() => {
+            setIsRegister(true);
+          }}
+        >
           Tạo Tài Khoản
         </div>
       </div>

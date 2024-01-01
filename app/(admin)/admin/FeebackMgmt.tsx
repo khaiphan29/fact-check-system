@@ -47,17 +47,33 @@ const FeedbackMgmt = (props: Props) => {
 
   return (
     <div className="">
-      <div className="p-2 flex gap-2">
-        <div className="p-4 bg-approved_1 rounded-3xl font-medium flex items-center">
-          {statistic?.positive_count} Đánh Giá Tốt
+      <div className="p-2 flex gap-2 justify-end">
+        <div className="p-4 bg-approved_1 rounded-3xl font-medium flex items-center text-lg ">
+          <span className="text-3xl mr-4 text-approved_2 brightness-75">
+            {statistic?.positive_count}
+          </span>{" "}
+          Đánh Giá Tốt
         </div>
-        <div className="p-4 bg-refuted_1 rounded-3xl">
-          <div className="font-medium">{statistic?.negative_count} Đánh Giá Tiêu Cực</div>
-          <div className="">
-            {statistic?.wrong_evidence_count} Nhận Xét Sai Minh Chứng
+        <div className="p-4 bg-refuted_1 rounded-3xl font-medium flex items-center text-lg ">
+          <span className="text-3xl mr-4 text-refuted_2 brightness-75">
+            {statistic?.negative_count}
+          </span>{" "}
+          Đánh Giá Tiêu Cực
+        </div>
+
+        <div className="relative p-4 bg-refuted_1  rounded-3xl -ml-12 pl-12 -z-50 ">
+          <div className="flex items-center text-lg ">
+            <span className="text-3xl mr-4 text-refuted_2 brightness-100">
+              {statistic?.wrong_evidence_count}
+            </span>{" "}
+            Nhận Xét Sai Minh Chứng
           </div>
-          <div className="">
-            {statistic?.wrong_rating_count} Nhận Xét Sai Kết Quả
+
+          <div className="flex items-center text-lg ">
+            <span className="text-3xl mr-4 text-refuted_2 brightness-100">
+              {statistic?.wrong_rating_count}
+            </span>{" "}
+            Nhận Xét Sai Kết Quả
           </div>
         </div>
       </div>

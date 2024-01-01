@@ -34,7 +34,7 @@ CREATE TABLE "scraping_history" (
     "id" SERIAL NOT NULL,
     "source_id" INTEGER NOT NULL,
     "url" TEXT NOT NULL,
-    "status" INTEGER NOT NULL,
+    "status" BOOLEAN NOT NULL,
     "created_date" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
 
     CONSTRAINT "scraping_history_pkey" PRIMARY KEY ("id")
@@ -55,7 +55,7 @@ CREATE TABLE "claim" (
 -- CreateTable
 CREATE TABLE "claim_group" (
     "id" SERIAL NOT NULL,
-    "owner_id" INTEGER NOT NULL,
+    "owner_id" INTEGER NOT NULL DEFAULT 0,
     "name" VARCHAR(100) NOT NULL,
     "created_date" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
     "modified_date" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
@@ -145,7 +145,7 @@ ALTER TABLE "claim" ADD CONSTRAINT "claim_group_id_fkey" FOREIGN KEY ("group_id"
 ALTER TABLE "claim" ADD CONSTRAINT "claim_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "claim_group" ADD CONSTRAINT "claim_group_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE NO ACTION;
+ALTER TABLE "claim_group" ADD CONSTRAINT "claim_group_owner_id_fkey" FOREIGN KEY ("owner_id") REFERENCES "user"("id") ON DELETE SET DEFAULT ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "feedback" ADD CONSTRAINT "feedback_claim_id_fkey" FOREIGN KEY ("claim_id") REFERENCES "claim"("id") ON DELETE RESTRICT ON UPDATE NO ACTION;
