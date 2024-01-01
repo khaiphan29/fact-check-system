@@ -3,12 +3,10 @@ import Link from "next/link";
 import React from "react";
 import logo from "@/public/assets/images/logo.png";
 import NavLink from "./NavLink";
-import { getServerSession, Session } from "next-auth";
+import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getRole } from "@/utils/auth";
 import { GetRoleResponse } from "@/types/global";
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
-import { getServerSideProps } from "next/dist/build/templates/pages";
 
 type Repo = {
   email?: string;
