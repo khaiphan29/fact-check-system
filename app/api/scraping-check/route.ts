@@ -5,6 +5,8 @@ import {
 } from "@/types/global";
 import prisma from "@/utils/prismaClient";
 
+export const maxDuration = 300;
+
 async function mockUpScraping(
   data: {
     id: number;

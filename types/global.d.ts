@@ -249,6 +249,16 @@ interface ExternalScrapingRequest {
   }[];
 }
 
+interface ScrapingHistory {
+  url: string;
+  status: boolean;
+  created_date: Date;
+}
+
+interface ScrapingHistoryResponse {
+  list: ScrapingHistory[];
+}
+
 import { PrismaClient } from "@prisma/client";
 
 declare global {

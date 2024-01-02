@@ -3,6 +3,8 @@ import prisma from "@/utils/prismaClient";
 import { FactCheckStatistic, FactCheckStatisticResponse } from "@/types/global";
 import { notFoundResponse } from "@/utils/routeHandler";
 
+export const maxDuration = 300;
+
 async function getPopularSource(month?: number) {
   const popular_source = month
     ? await prisma.$queryRaw<
