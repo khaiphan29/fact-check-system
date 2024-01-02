@@ -8,7 +8,9 @@ interface Props {
 }
 
 const PopUpMsg = (props: Props) => {
-  const customComponent = <div className="bg-white p-10">{props.msg}</div>;
+  const customComponent = (
+    <div className="bg-white rounded-2xl p-10">{props.msg}</div>
+  );
   return (
     <div>
       <PopUpContainer
