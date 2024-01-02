@@ -1,4 +1,4 @@
-import { AccountFormData, RegisterRequest } from "@/types/global";
+import { AccountFormData } from "@/types/global";
 import prisma from "@/utils/prismaClient";
 import { notFoundResponse } from "@/utils/routeHandler";
 

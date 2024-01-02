@@ -27,9 +27,7 @@ const NavLink = (props: Props) => {
   } else if (props.name === "Đăng xuất") {
     return (
       <div
-        className={`${styles.container} ${
-          pathName.includes(props.href) ? styles.active : ''
-        }`}
+        className={`${styles.container}`}
         onClick={() => signOut()}
       >
         {props.name}

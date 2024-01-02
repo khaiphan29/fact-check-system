@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-  innerComponent: React.JSX.Element
+  innerComponent: React.JSX.Element;
   setCloseFunction: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

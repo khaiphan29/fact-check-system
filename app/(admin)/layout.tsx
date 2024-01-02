@@ -14,10 +14,10 @@ import { GetRoleResponse } from "@/types/global";
 import AdminNav from "./AdminNav";
 
 export const metadata = {
-  title: "Trang Admin",
+  title: "Quản Lý Hệ Thống",
   icons: {
     icon: '/icon.ico', // /public path
-    },
+  },
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {

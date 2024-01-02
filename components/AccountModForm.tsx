@@ -84,12 +84,14 @@ const AccountModForm = (props: Props) => {
   }
 
   return (
-    <div className="w-[70vw] bg-white p-10 rounded-3xl overflow-scroll max-h-[90vh]">
+    <div
+      className={`w-[50vw] bg-white p-10 rounded-3xl overflow-scroll ${
+        !props.isUser && "max-h-[90vh]"
+      }`}
+    >
       <div className="flex justify-between items-center">
         <h1 className={`heading-small ${styles.title}`}>Chỉnh sửa tài khoản</h1>
-        {loading ? (
-          <ReactLoading type={"cubes"} color="black" />
-        ) : (
+        {!loading && (
           <div
             className="py-4 px-6 text-refuted_2 border border-refuted_2 rounded-2xl hover:bg-refuted_2 hover:text-white transition-all duration-200 cursor-pointer"
             onClick={() => {
@@ -220,9 +222,19 @@ const AccountModForm = (props: Props) => {
           value={accountData.phone}
         />
 
-        <button type="submit" className={styles.form_submit}>
-          Chỉnh sửa
-        </button>
+        {loading ? (
+          <div className="self-center">
+            {" "}
+            <ReactLoading color="black" />
+          </div>
+        ) : (
+          <button
+            type="submit"
+            className="self-center w-fit py-4 px-10 mt-5 rounded-2xl bg-black text-white font-light hover:brightness-125 "
+          >
+            Chỉnh Sửa
+          </button>
+        )}
       </form>
     </div>
   );
