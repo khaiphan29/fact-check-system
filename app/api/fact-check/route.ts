@@ -10,6 +10,8 @@ import {
 
 // const prisma = new PrismaClient();
 
+export const maxDuration = 300;
+
 async function writeResult(
   userId: number,
   groupId: number,
