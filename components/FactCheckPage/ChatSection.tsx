@@ -68,21 +68,18 @@ const ChatSection = (props: { groupId: number; email: string }) => {
 
   async function fetchClaimData(claim: String) {
     try {
-      const res: Response = await fetch(
-        "http://localhost:3000/api/fact-check",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            claim: claim,
-            email: props.email,
-            isQuick: false,
-            groupId: Number(props.groupId),
-          }),
-        }
-      );
+      const res: Response = await fetch("/api/fact-check", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          claim: claim,
+          email: props.email,
+          isQuick: false,
+          groupId: Number(props.groupId),
+        }),
+      });
       if (res.ok) {
         const responseData: FactCheckResponse = await res.json();
         setIsLoading(false);

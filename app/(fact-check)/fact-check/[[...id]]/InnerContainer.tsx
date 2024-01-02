@@ -10,10 +10,9 @@ import { useSession } from "next-auth/react";
 import { HiChevronLeft, HiChevronRight, HiDotsVertical } from "react-icons/hi";
 import { BsBookmarkPlusFill } from "react-icons/bs";
 import ResultGroup from "@/components/FactCheckPage/ResultGroupCard";
-// import BlankChatSection from "@/components/FactCheckPage/BlankChatSection";
 
 import { getFactCheckGroup } from "@/utils/factCheck";
-import { notFound, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import CreateGroupForm from "@/components/FactCheckPage/CreateGroupForm";
 import { FactCheckGroupResponse } from "@/types/global";
 

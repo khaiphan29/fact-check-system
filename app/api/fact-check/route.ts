@@ -97,8 +97,9 @@ export async function POST(request: Request) {
   if (!user) return notFoundResponse();
 
   try {
+    // console.log("Sending AI Request...")
     const aiData: AIResponse = await fetchModelResult(data.claim);
-
+    // console.log("Received AI Request...")
     const claimID = await writeResult(
       user!.id,
       claimGroup!.id,
