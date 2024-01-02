@@ -12,13 +12,16 @@ const AdminNav = () => {
   return (
     <nav className="h-14 flex justify-between items-center">
       <div className="flex justify-center items-center gap-10">
-        <Image
-          src={logo.src}
-          alt="logo"
-          width={153}
-          height={41}
-          className="h-7 w-auto"
-        />
+        <Link href={"/"}>
+          <Image
+            src={logo.src}
+            alt="logo"
+            width={153}
+            height={41}
+            className="h-7 w-auto"
+          />
+        </Link>
+
         <div className="font-semibold text-xl ">Trang Quản Lý</div>
       </div>
 

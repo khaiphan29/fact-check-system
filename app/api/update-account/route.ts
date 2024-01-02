@@ -1,14 +1,14 @@
-import { AccountFormData, RegisterRequest } from "@/types/global";
+import { AccountFormData, AccountModRequest, RegisterRequest } from "@/types/global";
 import prisma from "@/utils/prismaClient";
 
 // const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
-  const data: AccountFormData = await request.json();
+  const data: AccountModRequest = await request.json();
 
-  const newUser = await prisma.user.update({
+  await prisma.user.update({
     where: {
-      email: data.email,
+      email: data.old_email,
     },
     data: {
       username: data.username,

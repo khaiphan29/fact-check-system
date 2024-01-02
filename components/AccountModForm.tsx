@@ -1,10 +1,9 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
-import Link from "next/link";
 import "@/styles/login-register.css";
 import styles from "@/styles/Auth.module.css";
-import { fetchRegistry, getAccount, updateAccount } from "@/utils/auth";
+import { getAccount, updateAccount } from "@/utils/auth";
 import ReactLoading from "react-loading";
 import { AccountFormData, ErrorResponse } from "@/types/global";
 import { signOut } from "next-auth/react";
@@ -68,7 +67,10 @@ const AccountModForm = (props: Props) => {
     event.preventDefault();
 
     setLoading(true);
-    const res: Response = await updateAccount(accountData);
+    const res: Response = await updateAccount({
+      ...accountData,
+      old_email: props.email,
+    });
     setLoading(false);
 
     if (res.status == 409) {
@@ -187,7 +189,7 @@ const AccountModForm = (props: Props) => {
         </label>
         <input
           className={styles.form_input}
-          type="password"
+          type="text"
           id="registerForm_password"
           placeholder="Mật Khẩu"
           onChange={(e) => {

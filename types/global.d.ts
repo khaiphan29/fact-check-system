@@ -84,6 +84,10 @@ interface AccountFormData {
   phone: string;
 }
 
+interface AccountModRequest extends AccountFormData {
+  old_email: string;
+}
+
 interface RegisterRequest {
   email: string;
   username: string;

@@ -1,6 +1,7 @@
 import {
   AccountFormData,
   AccountListRequest,
+  AccountModRequest,
   GetRoleRequest,
   RegisterRequest,
 } from "@/types/global";
@@ -68,7 +69,7 @@ export const getAccount = async (values: {
 };
 
 export const updateAccount = async (
-  values: AccountFormData
+  values: AccountModRequest
 ): Promise<Response> => {
   // console.log(`Fetching... /api/register`);
 
