@@ -19,7 +19,7 @@ chrome.contextMenus.onClicked.addListener(function (info) {
     chrome.windows.create({
       type: 'popup',
       // url: chrome.runtime.getURL('popup_window.html'),
-      url: 'http://localhost:3000/extension-fc/' + modifiedSelectionText,
+      url: 'https://fact-check-system.vercel.app/extension-fc/' + modifiedSelectionText,
       width: 1200,
       height: 750,
       focused: true

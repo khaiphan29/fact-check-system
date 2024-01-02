@@ -26,7 +26,7 @@ import {
 } from "@/types/global";
 
 interface Props {
-  email?: string,
+  email?: string;
   claim?: string;
   claimDisplay?: ClaimResult;
   setClaim?: React.Dispatch<React.SetStateAction<string>>;
@@ -90,17 +90,14 @@ const SearchResult = (props: Props) => {
     try {
       const response = await quickCheckClaim({
         claim: props.claim!,
-        email: props.email ? props.email : session ? session.user!.email! : "guest",
+        email: props.email
+          ? props.email
+          : session
+          ? session.user!.email!
+          : "guest",
         isQuick: true,
         groupId: -1,
       });
-
-      if (response.status === 404) {
-        setResult({ ...result, isLoading: false });
-        const errMsg: ErrorResponse = await response.json();
-        setErrorMsg(errMsg.msg);
-        setIsError(true);
-      }
 
       if (response.ok) {
         const responseData: FactCheckResponse = await response.json();
@@ -118,6 +115,16 @@ const SearchResult = (props: Props) => {
           css: cssProps[responseData.final_label],
           isLoading: false,
         });
+      } else {
+        setResult({ ...result, isLoading: false });
+        let errMsg: ErrorResponse = {
+          msg: "Lỗi không xác định",
+        };
+        if (response.status === 404) {
+          errMsg = await response.json();
+        }
+        setErrorMsg(errMsg.msg);
+        setIsError(true);
       }
     } catch (e) {
       console.log("Got error: ", e);

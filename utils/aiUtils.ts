@@ -7,6 +7,7 @@ export async function fetchModelResult(claim: string): Promise<AIResponse> {
   try {
     const res: Response = await fetch(realURL, {
       method: "POST",
+      signal: AbortSignal.timeout(120000),
       headers: {
         "Content-Type": "application/json",
       },
